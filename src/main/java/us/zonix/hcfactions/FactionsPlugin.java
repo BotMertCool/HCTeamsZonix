@@ -1,6 +1,9 @@
 package us.zonix.hcfactions;
 
+import club.minemen.spigot.ClubSpigot;
 import lombok.Setter;
+import us.zonix.core.CorePlugin;
+import us.zonix.core.board.BoardManager;
 import us.zonix.hcfactions.blockoperation.BlockOperationModifier;
 import us.zonix.hcfactions.combatlogger.CombatLogger;
 import us.zonix.hcfactions.combatlogger.CombatLoggerListeners;
@@ -24,11 +27,7 @@ import us.zonix.hcfactions.event.koth.procedure.KothCreateProcedureListeners;
 import us.zonix.hcfactions.factions.Faction;
 import us.zonix.hcfactions.factions.claims.ClaimListeners;
 import us.zonix.hcfactions.factions.claims.ClaimPillar;
-import us.centile.hcfactions.factions.commands.*;
-import us.centile.hcfactions.factions.commands.admin.*;
-import us.centile.hcfactions.factions.commands.leader.*;
-import us.centile.hcfactions.factions.commands.officer.*;
-import us.centile.hcfactions.factions.commands.system.*;
+import us.zonix.hcfactions.factions.claims.CustomMovementHandler;
 import us.zonix.hcfactions.factions.commands.*;
 import us.zonix.hcfactions.factions.commands.admin.*;
 import us.zonix.hcfactions.factions.commands.leader.FactionDemoteCommand;
@@ -47,11 +46,9 @@ import us.zonix.hcfactions.itemdye.ItemDyeListeners;
 import us.zonix.hcfactions.kits.Kit;
 import us.zonix.hcfactions.kits.KitListeners;
 import us.zonix.hcfactions.kits.command.KitCommand;
-import us.centile.hcfactions.misc.commands.*;
 import us.zonix.hcfactions.misc.commands.*;
 import us.zonix.hcfactions.misc.commands.economy.PayCommand;
 import us.zonix.hcfactions.misc.commands.economy.SetBalanceCommand;
-import us.centile.hcfactions.misc.listeners.*;
 import us.zonix.hcfactions.misc.listeners.BorderListener;
 import us.zonix.hcfactions.misc.listeners.ChatListeners;
 import us.zonix.hcfactions.misc.listeners.GlitchListeners;
@@ -69,6 +66,7 @@ import us.zonix.hcfactions.profile.options.command.ProfileOptionsCommand;
 import us.zonix.hcfactions.profile.ore.ProfileOreCommand;
 import us.zonix.hcfactions.profile.protection.ProfileProtection;
 import us.zonix.hcfactions.statracker.StatTrackerListeners;
+import us.zonix.hcfactions.util.TabListRunnable;
 import us.zonix.hcfactions.util.command.CommandFramework;
 import us.zonix.hcfactions.util.database.FactionsDatabase;
 import us.zonix.hcfactions.event.koth.procedure.command.KothRemoveCommand;
@@ -124,6 +122,7 @@ import us.zonix.hcfactions.profile.protection.command.ProfileProtectionCommand;
 import us.zonix.hcfactions.statracker.StatTrackerListeners;
 
 import java.io.IOException;
+import java.util.UUID;
 
 @Getter
 public class FactionsPlugin extends JavaPlugin {
@@ -181,10 +180,17 @@ public class FactionsPlugin extends JavaPlugin {
         registerListeners();
         registerCommands();
 
-
         PlayerFaction.runTasks();
 
         this.getServer().getScheduler().runTaskTimerAsynchronously(this, new ProfileAutoSaver(this), 5000L, 5000L);
+
+        ClubSpigot.INSTANCE.addMovementHandler(new CustomMovementHandler());
+
+        CorePlugin.getInstance().useTabList();
+        CorePlugin.getInstance().getTabListManager().getTabList().setHead(UUID.fromString("6b22037d-c043-4271-94f2-adb00368bf16"));
+
+        CorePlugin.getInstance().setBoardManager(new BoardManager(new FactionsBoardAdapter(this)));
+        this.getServer().getScheduler().runTaskTimerAsynchronously(this, new TabListRunnable(), 20L, 20L);
     }
 
     public void onDisable() {

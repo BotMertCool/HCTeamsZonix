@@ -147,7 +147,7 @@ public class ProfileListeners implements Listener {
             profile.setBalance(100);
 
             if(!FactionsPlugin.getInstance().isKitmapMode()) {
-                player.getInventory().addItem(new ItemBuilder(Material.FISHING_ROD).enchantment(Enchantment.DURABILITY, 3).name(ChatColor.GOLD.toString() + ChatColor.BOLD + "MineAU " + ChatColor.GRAY + "[" + ChatColor.RED + "Starter" + ChatColor.GRAY + "]").build());
+                player.getInventory().addItem(new ItemBuilder(Material.FISHING_ROD).enchantment(Enchantment.DURABILITY, 3).name(ChatColor.RED.toString() + ChatColor.BOLD + "Zonix " + ChatColor.GRAY + "[" + ChatColor.RED + "Starter" + ChatColor.GRAY + "]").build());
                 player.getInventory().addItem(new ItemBuilder(Material.COOKED_BEEF).amount(16).build());
                 Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "crate givekey " + player.getName() + " Common 1");
             }

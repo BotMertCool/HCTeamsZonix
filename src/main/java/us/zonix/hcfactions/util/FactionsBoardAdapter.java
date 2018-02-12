@@ -48,7 +48,7 @@ public class FactionsBoardAdapter implements BoardAdapter {
 
     @Override
     public long getInterval() {
-        return 20L;
+        return 1L;
     }
 
     @Override

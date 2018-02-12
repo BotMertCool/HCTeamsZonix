@@ -12,7 +12,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import us.zonix.hcfactions.FactionsPlugin;
 import us.zonix.hcfactions.kits.Kit;
-import us.centile.hcfactions.kits.command.subcommand.*;
+import us.zonix.hcfactions.kits.command.subcommand.*;
 import us.zonix.hcfactions.profile.Profile;
 import us.zonix.hcfactions.util.DateUtil;
 import us.zonix.hcfactions.util.ItemBuilder;

@@ -1,6 +1,6 @@
 package us.zonix.hcfactions.crate.command;
 
-import us.centile.hcfactions.crate.command.subcommand.*;
+import us.zonix.hcfactions.crate.command.subcommand.*;
 import us.zonix.hcfactions.crate.command.subcommand.*;
 import us.zonix.hcfactions.util.PluginCommand;
 import us.zonix.hcfactions.util.command.Command;

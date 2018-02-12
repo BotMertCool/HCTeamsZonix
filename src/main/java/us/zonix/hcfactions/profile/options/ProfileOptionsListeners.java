@@ -1,5 +1,8 @@
 package us.zonix.hcfactions.profile.options;
 
+import us.zonix.core.CorePlugin;
+import us.zonix.hcfactions.FactionsPlugin;
+import us.zonix.hcfactions.factions.Faction;
 import us.zonix.hcfactions.profile.Profile;
 import us.zonix.hcfactions.profile.options.item.ProfileOptionsItem;
 import us.zonix.hcfactions.profile.options.item.ProfileOptionsItemState;
@@ -48,6 +51,12 @@ public class ProfileOptionsListeners implements Listener {
                         }
                         else if(profile.getOptions().getModifyTabList() == ProfileOptionsItemState.TAB_DETAILED_VANILLA) {
                             profile.getOptions().setModifyTabList(ProfileOptionsItemState.TAB_VANILLA);
+                            for (int r = 0; r < 20; r++) {//slot 0-59 for 1.7 players
+                                for (int c = 0; c < 3l; c++) {
+                                    CorePlugin.getInstance().getTabListManager().getTabList().updateSlot(player, r, c, "");
+                                }
+                            }
+
                         }
 
                         else if(profile.getOptions().getModifyTabList() == ProfileOptionsItemState.TAB_VANILLA) {
