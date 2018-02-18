@@ -1,29 +1,53 @@
 package us.zonix.hcfactions;
 
 import club.minemen.spigot.ClubSpigot;
+import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ShapelessRecipe;
+import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.java.JavaPlugin;
 import us.zonix.core.CorePlugin;
 import us.zonix.core.board.BoardManager;
 import us.zonix.hcfactions.blockoperation.BlockOperationModifier;
+import us.zonix.hcfactions.blockoperation.BlockOperationModifierListeners;
+import us.zonix.hcfactions.claimwall.ClaimWallListeners;
 import us.zonix.hcfactions.combatlogger.CombatLogger;
 import us.zonix.hcfactions.combatlogger.CombatLoggerListeners;
 import us.zonix.hcfactions.combatlogger.commands.CombatLoggerCommand;
 import us.zonix.hcfactions.crate.Crate;
+import us.zonix.hcfactions.crate.CrateListeners;
 import us.zonix.hcfactions.crate.command.CrateCommand;
 import us.zonix.hcfactions.crowbar.CrowbarListeners;
 import us.zonix.hcfactions.deathlookup.DeathLookupCommand;
 import us.zonix.hcfactions.deathlookup.DeathLookupListeners;
 import us.zonix.hcfactions.deathsign.DeathSignListeners;
+import us.zonix.hcfactions.economysign.EconomySignListeners;
 import us.zonix.hcfactions.elevator.ElevatorListeners;
+import us.zonix.hcfactions.enchantmentlimiter.EnchantmentLimiterListeners;
+import us.zonix.hcfactions.event.Event;
 import us.zonix.hcfactions.event.EventManager;
+import us.zonix.hcfactions.event.glowstone.GlowstoneEvent;
+import us.zonix.hcfactions.event.glowstone.GlowstoneEventListeners;
 import us.zonix.hcfactions.event.glowstone.command.GlowstoneForceCommand;
+import us.zonix.hcfactions.event.glowstone.procedure.GlowstoneCreateProcedureListeners;
+import us.zonix.hcfactions.event.glowstone.procedure.command.GlowstoneProcedureCommand;
 import us.zonix.hcfactions.event.glowstone.procedure.command.GlowstoneRemoveCommand;
 import us.zonix.hcfactions.event.koth.KothEvent;
 import us.zonix.hcfactions.event.koth.KothEventListeners;
 import us.zonix.hcfactions.event.koth.command.KothCommand;
 import us.zonix.hcfactions.event.koth.command.KothScheduleCommand;
+import us.zonix.hcfactions.event.koth.command.KothStartCommand;
 import us.zonix.hcfactions.event.koth.command.KothStopCommand;
 import us.zonix.hcfactions.event.koth.procedure.KothCreateProcedureListeners;
+import us.zonix.hcfactions.event.koth.procedure.command.KothCreateProcedureCommand;
+import us.zonix.hcfactions.event.koth.procedure.command.KothRemoveCommand;
 import us.zonix.hcfactions.factions.Faction;
 import us.zonix.hcfactions.factions.claims.ClaimListeners;
 import us.zonix.hcfactions.factions.claims.ClaimPillar;
@@ -37,89 +61,48 @@ import us.zonix.hcfactions.factions.commands.leader.FactionPromoteCommand;
 import us.zonix.hcfactions.factions.commands.officer.*;
 import us.zonix.hcfactions.factions.commands.system.FactionColorCommand;
 import us.zonix.hcfactions.factions.commands.system.FactionCreateSystemCommand;
+import us.zonix.hcfactions.factions.commands.system.FactionToggleDeathbanCommand;
 import us.zonix.hcfactions.factions.type.PlayerFaction;
 import us.zonix.hcfactions.files.ConfigFile;
 import us.zonix.hcfactions.inventory.command.CloneInventoryCommand;
 import us.zonix.hcfactions.inventory.command.GiveInventoryCommand;
+import us.zonix.hcfactions.inventory.command.LastInventoryCommand;
 import us.zonix.hcfactions.itemdye.ItemDye;
 import us.zonix.hcfactions.itemdye.ItemDyeListeners;
 import us.zonix.hcfactions.kits.Kit;
 import us.zonix.hcfactions.kits.KitListeners;
 import us.zonix.hcfactions.kits.command.KitCommand;
 import us.zonix.hcfactions.misc.commands.*;
+import us.zonix.hcfactions.misc.commands.economy.AddBalanceCommand;
+import us.zonix.hcfactions.misc.commands.economy.BalanceCommand;
 import us.zonix.hcfactions.misc.commands.economy.PayCommand;
 import us.zonix.hcfactions.misc.commands.economy.SetBalanceCommand;
-import us.zonix.hcfactions.misc.listeners.BorderListener;
-import us.zonix.hcfactions.misc.listeners.ChatListeners;
-import us.zonix.hcfactions.misc.listeners.GlitchListeners;
-import us.zonix.hcfactions.misc.listeners.ScoreboardListeners;
+import us.zonix.hcfactions.misc.listeners.*;
 import us.zonix.hcfactions.mobstack.MobStack;
 import us.zonix.hcfactions.mobstack.MobStackListeners;
+import us.zonix.hcfactions.mode.Mode;
 import us.zonix.hcfactions.mode.ModeListeners;
+import us.zonix.hcfactions.mode.command.ModeCommand;
+import us.zonix.hcfactions.potionlimiter.PotionLimiterListeners;
 import us.zonix.hcfactions.profile.Profile;
 import us.zonix.hcfactions.profile.ProfileAutoSaver;
 import us.zonix.hcfactions.profile.ProfileListeners;
+import us.zonix.hcfactions.profile.cooldown.ProfileCooldownListeners;
 import us.zonix.hcfactions.profile.fight.command.KillStreakCommand;
 import us.zonix.hcfactions.profile.kit.ProfileKitActionListeners;
 import us.zonix.hcfactions.profile.kit.command.ProfileKitCommand;
 import us.zonix.hcfactions.profile.options.command.ProfileOptionsCommand;
 import us.zonix.hcfactions.profile.ore.ProfileOreCommand;
 import us.zonix.hcfactions.profile.protection.ProfileProtection;
+import us.zonix.hcfactions.profile.protection.command.ProfileProtectionCommand;
 import us.zonix.hcfactions.statracker.StatTrackerListeners;
+import us.zonix.hcfactions.subclaim.SubclaimListeners;
+import us.zonix.hcfactions.util.FactionsBoardAdapter;
 import us.zonix.hcfactions.util.TabListRunnable;
 import us.zonix.hcfactions.util.command.CommandFramework;
 import us.zonix.hcfactions.util.database.FactionsDatabase;
-import us.zonix.hcfactions.event.koth.procedure.command.KothRemoveCommand;
-import us.zonix.hcfactions.blockoperation.BlockOperationModifierListeners;
-import us.zonix.hcfactions.claimwall.ClaimWallListeners;
-import us.zonix.hcfactions.crate.CrateListeners;
-import us.zonix.hcfactions.economysign.EconomySignListeners;
-import us.zonix.hcfactions.enchantmentlimiter.EnchantmentLimiterListeners;
-import us.zonix.hcfactions.event.Event;
-import us.zonix.hcfactions.event.glowstone.GlowstoneEvent;
-import us.zonix.hcfactions.event.glowstone.GlowstoneEventListeners;
-import us.zonix.hcfactions.event.glowstone.procedure.GlowstoneCreateProcedureListeners;
-import us.zonix.hcfactions.event.glowstone.procedure.command.GlowstoneProcedureCommand;
-import us.zonix.hcfactions.event.koth.command.KothStartCommand;
-import us.zonix.hcfactions.event.koth.procedure.command.KothCreateProcedureCommand;
-import us.zonix.hcfactions.inventory.command.LastInventoryCommand;
-import us.zonix.hcfactions.misc.commands.economy.AddBalanceCommand;
-import us.zonix.hcfactions.misc.commands.economy.BalanceCommand;
-import us.zonix.hcfactions.mode.Mode;
-import us.zonix.hcfactions.mode.command.ModeCommand;
-import us.zonix.hcfactions.potionlimiter.PotionLimiterListeners;
-import us.zonix.hcfactions.profile.cooldown.ProfileCooldownListeners;
-import us.zonix.hcfactions.profile.protection.command.ProfileProtectionCommand;
-import us.zonix.hcfactions.subclaim.SubclaimListeners;
-import us.zonix.hcfactions.util.FactionsBoardAdapter;
-import lombok.Getter;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.ShapelessRecipe;
-import org.bukkit.plugin.PluginManager;
-import org.bukkit.plugin.java.JavaPlugin;
 import us.zonix.hcfactions.util.player.PlayerUtility;
 import us.zonix.hcfactions.util.player.SimpleOfflinePlayer;
-import us.zonix.hcfactions.deathsign.DeathSignListeners;
-import us.zonix.hcfactions.elevator.ElevatorListeners;
-import us.zonix.hcfactions.enchantmentlimiter.EnchantmentLimiterListeners;
-import us.zonix.hcfactions.event.EventManager;
-import us.zonix.hcfactions.event.glowstone.procedure.GlowstoneCreateProcedureListeners;
-import us.zonix.hcfactions.event.glowstone.procedure.command.GlowstoneRemoveCommand;
-import us.zonix.hcfactions.event.koth.command.KothStartCommand;
-import us.zonix.hcfactions.event.koth.procedure.command.KothRemoveCommand;
-import us.zonix.hcfactions.factions.commands.system.FactionToggleDeathbanCommand;
-import us.zonix.hcfactions.files.ConfigFile;
-import us.zonix.hcfactions.profile.Profile;
-import us.zonix.hcfactions.profile.kit.ProfileKitActionListeners;
-import us.zonix.hcfactions.profile.options.command.ProfileOptionsCommand;
-import us.zonix.hcfactions.profile.protection.command.ProfileProtectionCommand;
-import us.zonix.hcfactions.statracker.StatTrackerListeners;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -134,7 +117,6 @@ public class FactionsPlugin extends JavaPlugin {
     private ConfigFile mainConfig, scoreboardConfig, languageConfig, kothScheduleConfig;
     @Setter private boolean loaded;
     @Setter private boolean kitmapMode;
-    @Setter private boolean cubeCoreMode;
 
     public void onEnable() {
         instance = this;
@@ -145,7 +127,6 @@ public class FactionsPlugin extends JavaPlugin {
         this.kothScheduleConfig = new ConfigFile(this, "koth-schedule");
         this.factionsDatabase = new FactionsDatabase(this);
         this.kitmapMode = this.mainConfig.getBoolean("KITMAP_MODE");
-        this.cubeCoreMode = this.mainConfig.getBoolean("CUBECORE_MODE");
 
         for (Player player : PlayerUtility.getOnlinePlayers() ) {
             new Profile(player.getUniqueId());
@@ -155,7 +136,7 @@ public class FactionsPlugin extends JavaPlugin {
             for (Entity entity : world.getEntities()) {
                 if (entity.getType() == CombatLogger.ENTITY_TYPE) {
                     if (entity instanceof LivingEntity) {
-                        if (((LivingEntity) entity).getCustomName() != null) {
+                        if (entity.getCustomName() != null) {
                             entity.remove();
                         }
                     }
@@ -383,6 +364,7 @@ public class FactionsPlugin extends JavaPlugin {
         pluginManager.registerEvents(new ClaimListeners(), this);
         pluginManager.registerEvents(new KitListeners(), this);
         pluginManager.registerEvents(new BorderListener(), this);
+        pluginManager.registerEvents(new EnderpearlListener(this), this);
     }
 
 }

@@ -60,7 +60,7 @@ public class GlowstoneEventListeners implements Listener {
                 }
             }
 
-            if(there == 0){
+            if(there == 0 && event.getBlock().getType() == Material.GLOWSTONE){
                 Bukkit.broadcastMessage(FactionsPlugin.getInstance().getLanguageConfig().getString("GLOWSTONE.FULLY_MINED").replace("%GLOWSTONE%", glowstoneEvent.getName()));
             }
         }

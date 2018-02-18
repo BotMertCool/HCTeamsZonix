@@ -20,7 +20,7 @@ public class ModeListeners implements Listener {
             if (mode.isSOTWActive()) {
                 event.setDamage(0.0);
                 event.setCancelled(true);
-                event.getEntity().getLocation().getWorld().playEffect(event.getEntity().getLocation(), Effect.FLAME, 5, 5);
+                event.getEntity().getLocation().getWorld().playEffect(event.getEntity().getLocation(), Effect.LAVA_POP, 5, 5);
             }
         }
     }

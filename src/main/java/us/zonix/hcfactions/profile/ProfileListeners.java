@@ -138,9 +138,7 @@ public class ProfileListeners implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        Profile.sendPlayerTabUpdate(player);
         Profile profile = Profile.getByPlayer(player);
-        profile.updateTab();
         profile.setLastInside(Claim.getProminentClaimAt(player.getLocation()));
 
         if(!player.hasPlayedBefore()) {
@@ -171,6 +169,11 @@ public class ProfileListeners implements Listener {
                 offlinePlayer.setName(player.getName());
             }
         }
+
+        Bukkit.getServer().getScheduler().runTaskLaterAsynchronously(FactionsPlugin.getInstance(), () -> {
+            Profile.sendGlobalTabUpdate();
+            profile.updateTab();
+        }, 20L);
     }
 
     @EventHandler

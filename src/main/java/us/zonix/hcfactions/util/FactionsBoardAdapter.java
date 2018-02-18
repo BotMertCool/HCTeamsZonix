@@ -53,6 +53,7 @@ public class FactionsBoardAdapter implements BoardAdapter {
 
     @Override
     public void onScoreboardCreate(Player player, Scoreboard scoreboard) {
+
     }
 
     @Override
