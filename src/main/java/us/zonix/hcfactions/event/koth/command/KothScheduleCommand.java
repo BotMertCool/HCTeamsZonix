@@ -22,13 +22,13 @@ public class KothScheduleCommand extends PluginCommand {
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();
 
-        FastDateFormat formatter = FastDateFormat.getInstance("EEEE, hh:mma", TimeZone.getTimeZone("Australia/Brisbane"), Locale.ENGLISH);
+        FastDateFormat formatter = FastDateFormat.getInstance("EEEE, hh:mma", TimeZone.getDefault(), Locale.ENGLISH);
 
         for(Schedule schedule : ScheduleHandler.schedules) {
-            player.sendMessage(ChatColor.GOLD + "[KingOfTheHill] " + ChatColor.YELLOW  + schedule.getName() + ChatColor.GOLD + " can be captured at " + ChatColor.BLUE + schedule.getFormatDay() + ChatColor.GOLD + ".");
+            player.sendMessage(ChatColor.GOLD + "[KOTH] " + ChatColor.YELLOW  + schedule.getName() + ChatColor.GOLD + " can be captured at " + ChatColor.BLUE + schedule.getFormatDay() + ChatColor.GOLD + ".");
         }
 
-        player.sendMessage(ChatColor.GOLD + "[KingOfTheHill] " + ChatColor.YELLOW  + "It is currently " + ChatColor.BLUE + formatter.format(System.currentTimeMillis()) + ChatColor.GOLD + ".");
+        player.sendMessage(ChatColor.GOLD + "[KOTH] " + ChatColor.YELLOW  + "It is currently " + ChatColor.BLUE + formatter.format(System.currentTimeMillis()) + ChatColor.GOLD + ".");
 
     }
 }

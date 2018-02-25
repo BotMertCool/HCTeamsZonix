@@ -149,7 +149,13 @@ public class ProfileKitListeners implements Listener {
                             }
 
                             if (add) {
-                                player.addPotionEffect(new PotionEffect(effect.getType(), toCheck * 2, effect.getLevel() - 1, true), true);
+
+                                Bukkit.getServer().getScheduler().runTask(FactionsPlugin.getInstance(), new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        player.addPotionEffect(new PotionEffect(effect.getType(), toCheck * 2, effect.getLevel() - 1, true), true);
+                                    }
+                                });
                             }
                         }
                     }

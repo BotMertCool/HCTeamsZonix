@@ -1,6 +1,7 @@
 package us.zonix.hcfactions.profile.kit.ability;
 
 import us.zonix.hcfactions.FactionsPlugin;
+import us.zonix.hcfactions.factions.Faction;
 import us.zonix.hcfactions.profile.Profile;
 import us.zonix.hcfactions.profile.kit.ProfileKitCooldown;
 import us.zonix.hcfactions.profile.kit.ProfileKitEnergy;
@@ -149,7 +150,8 @@ public class ProfileKitAbilityListeners implements Listener {
         }
 
         if (replace) {
-            player.addPotionEffect(toAdd, true);
+
+            Bukkit.getServer().getScheduler().runTask(FactionsPlugin.getInstance(), () -> player.addPotionEffect(toAdd, true));
         }
     }
 

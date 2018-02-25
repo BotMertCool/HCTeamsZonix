@@ -40,10 +40,10 @@ public class KothCommand extends PluginCommand {
         }
 
         Schedule kothEvent = ScheduleHandler.getNextEvent();
-        FastDateFormat formatter = FastDateFormat.getInstance("EEEE, hh:mma", TimeZone.getTimeZone("Australia/Brisbane"), Locale.ENGLISH);
+        FastDateFormat formatter = FastDateFormat.getInstance("EEEE, hh:mma", TimeZone.getDefault(), Locale.ENGLISH);
 
-        player.sendMessage(ChatColor.GOLD + "[KingOfTheHill] " + ChatColor.YELLOW  + kothEvent.getName() + ChatColor.GOLD + " can be captured at " + ChatColor.BLUE + kothEvent.getFormatDay() + ChatColor.GOLD + ".");
-        player.sendMessage(ChatColor.GOLD + "[KingOfTheHill] " + ChatColor.YELLOW  + "It is currently " + ChatColor.BLUE + formatter.format(System.currentTimeMillis()) + ChatColor.GOLD + ".");
+        player.sendMessage(ChatColor.GOLD + "[KOTH] " + ChatColor.YELLOW  + kothEvent.getName() + ChatColor.GOLD + " can be captured at " + ChatColor.BLUE + kothEvent.getFormatDay() + ChatColor.GOLD + ".");
+        player.sendMessage(ChatColor.GOLD + "[KOTH] " + ChatColor.YELLOW  + "It is currently " + ChatColor.BLUE + formatter.format(System.currentTimeMillis()) + ChatColor.GOLD + ".");
         player.sendMessage(ChatColor.YELLOW + "Type '/koth schedule' to see more upcoming KOTHs.");
 
     }

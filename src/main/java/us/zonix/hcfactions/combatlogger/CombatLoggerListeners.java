@@ -137,20 +137,6 @@ public class CombatLoggerListeners implements Listener {
         }
     }
 
-    @EventHandler
-    public void onPlayerMoveEvent(PlayerMoveEvent event) {
-        Player player = event.getPlayer();
-        Profile profile = Profile.getByPlayer(player);
-        if (profile.getCooldownByType(ProfileCooldownType.LOGOUT) != null && profile.getLogoutLocation() != null) {
-            if (event.getFrom().getBlockX() != event.getTo().getBlockX() || event.getFrom().getBlockZ() != event.getTo().getBlockZ() || event.getFrom().getBlockY() != event.getTo().getBlockY()) {
-                if (event.getTo().distance(profile.getLogoutLocation()) > main.getMainConfig().getInt("COMBAT_LOGGER.LOGOUT_CANCEL_RANGE")) {
-                    player.sendMessage(main.getLanguageConfig().getString("COMBAT_LOGGER.LOGOUT_CANCELLED"));
-                    profile.getCooldowns().remove(profile.getCooldownByType(ProfileCooldownType.LOGOUT));
-                    profile.setLogoutLocation(null);
-                }
-            }
-        }
-    }
 
     @EventHandler
     public void onChunkLoadEvent(ChunkLoadEvent event) {

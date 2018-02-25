@@ -138,49 +138,6 @@ public class ClaimWallListeners implements Listener {
     }
 
     @EventHandler
-    public void onPlayerMoveEvent(PlayerMoveEvent event) {
-        Player player = event.getPlayer();
-        Profile profile = Profile.getByPlayer(player);
-
-        if (profile.getCooldownByType(ProfileCooldownType.SPAWN_TAG) != null) {
-            Claim entering = Claim.getProminentClaimAt(event.getTo());
-            Claim leaving = Claim.getProminentClaimAt(event.getFrom());
-
-            if (entering != null && (leaving == null || !leaving.equals(entering))) {
-                if (ClaimWallType.SPAWN_TAG.isValid(entering)) {
-                    event.setCancelled(true);
-                    player.setSprinting(false);
-
-                    if (player.getVehicle() != null) {
-                        player.getVehicle().eject();
-                    }
-
-                    player.setVelocity(new Vector());
-                }
-            }
-        }
-
-        if (profile.getProtection() != null) {
-            Claim entering = Claim.getProminentClaimAt(event.getTo());
-            Claim leaving = Claim.getProminentClaimAt(event.getFrom());
-
-            if (entering != null && (leaving == null || !leaving.equals(entering))) {
-                if (ClaimWallType.PVP_PROTECTION.isValid(entering)) {
-                    event.setCancelled(true);
-
-                    if (player.getVehicle() != null) {
-                        player.getVehicle().eject();
-                    }
-
-                    player.setSprinting(false);
-                    player.setVelocity(new Vector());
-                }
-
-            }
-        }
-    }
-
-    @EventHandler
     public void onPlayerTeleportEvent(PlayerTeleportEvent event) {
         Player player = event.getPlayer();
         Profile profile = Profile.getByPlayer(player);

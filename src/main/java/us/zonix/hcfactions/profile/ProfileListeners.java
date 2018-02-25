@@ -293,31 +293,6 @@ public class ProfileListeners implements Listener {
     }
 
     @EventHandler
-    public void onPlayerMove(PlayerMoveEvent event) {
-        if (event.getFrom().getBlockX() != event.getTo().getBlockX() || event.getFrom().getBlockY() != event.getTo().getBlockY() || event.getFrom().getBlockZ() != event.getTo().getBlockZ()) {
-            final Player player = event.getPlayer();
-            Profile profile = Profile.getByPlayer(player);
-
-            if (profile.getTeleportWarmup() != null) {
-                if (profile.getTeleportWarmup().getEvent().getTeleportType() == ProfileTeleportType.HOME_TELEPORT) {
-                    profile.getTeleportWarmup().getEvent().setCancelled(true);
-                    Bukkit.getPluginManager().callEvent(new PlayerCancelFactionTeleportEvent(player, null, ProfileTeleportType.HOME_TELEPORT));
-                    profile.setTeleportWarmup(null);
-                    player.sendMessage(main.getLanguageConfig().getString("ERROR.TELEPORT_CANCELLED"));
-                }
-                else {
-                    if (player.getLocation().distance(profile.getTeleportWarmup().getEvent().getInitialLocation()) >= main.getMainConfig().getInt("TELEPORT_COUNTDOWN.STUCK.DISTANCE")) {
-                        profile.getTeleportWarmup().getEvent().setCancelled(true);
-                        Bukkit.getPluginManager().callEvent(new PlayerCancelFactionTeleportEvent(player, profile.getTeleportWarmup().getEvent().getFaction(), ProfileTeleportType.STUCK_TELEPORT));
-                        profile.setTeleportWarmup(null);
-                        player.sendMessage(main.getLanguageConfig().getString("ERROR.TELEPORT_CANCELLED"));
-                    }
-                }
-            }
-        }
-    }
-
-    @EventHandler
     public void onPlayerDamage(EntityDamageEvent event) {
         if (event.getEntity() instanceof Player) {
             final Player player = (Player) event.getEntity();

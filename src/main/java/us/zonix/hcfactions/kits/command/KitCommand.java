@@ -131,21 +131,6 @@ public class KitCommand extends PluginCommand {
         player.openInventory(inventory);
     }
 
-    public static void openUpdateInventory(Player player, Kit kit) {
-
-        Inventory inventory = Bukkit.createInventory(player, 9 * 6, ChatColor.RED + "Kits - 1/1");
-
-        inventory.setItem(0, new ItemBuilder(Material.CARPET).durability(7).name(ChatColor.RED.toString()).build());
-        inventory.setItem(8, new ItemBuilder(Material.CARPET).durability(7).name(ChatColor.RED.toString()).build());
-        inventory.setItem(4, new ItemBuilder(Material.PAPER).name(ChatColor.RED + "Page 1/1").lore(Arrays.asList(ChatColor.YELLOW + "Kit: " + ChatColor.RED + kit.getName())).build());
-
-        for (int i = 0; i < kit.getItems().size(); i++) {
-            inventory.setItem(9 + i, kit.getItems().get(i));
-        }
-
-        player.openInventory(inventory);
-    }
-
     public static String getTimeLeft(Profile profile, Kit kit) {
 
         if (!profile.getKitDelay().containsKey(kit)) {

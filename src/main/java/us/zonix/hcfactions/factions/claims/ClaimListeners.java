@@ -1,6 +1,7 @@
 package us.zonix.hcfactions.factions.claims;
 
 import org.bukkit.World;
+import org.bukkit.block.Sign;
 import us.zonix.hcfactions.FactionsPlugin;
 import us.zonix.hcfactions.factions.Faction;
 import org.bukkit.Bukkit;
@@ -653,9 +654,14 @@ public class ClaimListeners implements Listener {
                     return;
                 }
 
+                if(entity instanceof Sign) {
+                    return;
+                }
+
                 if (faction instanceof PlayerFaction && ((PlayerFaction) faction).isRaidable()) {
                     return;
                 }
+
 
                 if (profile.getFaction() == null || !faction.equals(profile.getFaction())) {
                     if (faction instanceof SystemFaction) {
@@ -688,6 +694,9 @@ public class ClaimListeners implements Listener {
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             Block block = event.getClickedBlock();
 
+            if(block.getType() == Material.WALL_SIGN || block.getType() == Material.SIGN_POST || block.getType() == Material.SIGN) {
+                return;
+            }
 
             if (block.getState() instanceof ContainerBlock || block.getState().getData() instanceof Redstone || block.getState().getData() instanceof Openable) {
                 Claim claim = Claim.getProminentClaimAt(block.getLocation());
@@ -700,6 +709,10 @@ public class ClaimListeners implements Listener {
                     }
 
                     if (!faction.equals(profile.getFaction())) {
+
+                        if(block.getType() == Material.WALL_SIGN || block.getType() == Material.SIGN_POST || block.getType() == Material.SIGN) {
+                            return;
+                        }
 
                         if (faction instanceof SystemFaction) {
                             SystemFaction systemFaction = (SystemFaction) faction;
@@ -741,6 +754,10 @@ public class ClaimListeners implements Listener {
                 Faction faction = claim.getFaction();
 
                 if (faction instanceof PlayerFaction && ((PlayerFaction) faction).isRaidable()) {
+                    return;
+                }
+
+                if(block.getType() == Material.WALL_SIGN || block.getType() == Material.SIGN_POST || block.getType() == Material.SIGN) {
                     return;
                 }
 

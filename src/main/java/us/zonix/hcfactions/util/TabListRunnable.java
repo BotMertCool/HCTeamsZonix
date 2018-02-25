@@ -63,7 +63,7 @@ public class TabListRunnable extends BukkitRunnable {
             }
 
 
-            tabList.updateSlot(player, 0, 1, ChatColor.DARK_RED.toString() + ChatColor.BOLD +  "ZONIX " + ChatColor.GRAY + "(HCF)");
+            tabList.updateSlot(player, 0, 1, ChatColor.DARK_RED.toString() + ChatColor.BOLD +  "Zonix " + ChatColor.GRAY + "(KitMap)");
 
             tabList.updateSlot(player, 1, 1, ChatColor.RED + "Players Online");
             tabList.updateSlot(player, 2, 1, ChatColor.GRAY.toString() + PlayerUtility.getOnlinePlayers().size() + "/" + Bukkit.getMaxPlayers());
@@ -146,14 +146,14 @@ public class TabListRunnable extends BukkitRunnable {
                 }
             } else if (profile.getOptions().getModifyTabList() == ProfileOptionsItemState.TAB_DETAILED) {
                 tabList.updateSlot(player, 0, 2, ChatColor.RED + "End Portals");
-                tabList.updateSlot(player, 1, 2, ChatColor.GRAY + "1000, 1000");
-                tabList.updateSlot(player, 2, 2, ChatColor.GRAY + "in each quadrant");
+                tabList.updateSlot(player, 1, 2, ChatColor.GRAY + "Only At");
+                tabList.updateSlot(player, 2, 2, ChatColor.GRAY + "Spawn");
 
                 tabList.updateSlot(player, 4, 2, ChatColor.RED + "Kit");
-                tabList.updateSlot(player, 5, 2, ChatColor.GRAY + "Prot 1, Sharp 1");
+                tabList.updateSlot(player, 5, 2, ChatColor.GRAY + "Prot 2, Sharp 3");
 
                 tabList.updateSlot(player, 7, 2, ChatColor.RED + "Border");
-                tabList.updateSlot(player, 8, 2, ChatColor.GRAY + "3000");
+                tabList.updateSlot(player, 8, 2, ChatColor.GRAY + "1500");
             }
         }
     }

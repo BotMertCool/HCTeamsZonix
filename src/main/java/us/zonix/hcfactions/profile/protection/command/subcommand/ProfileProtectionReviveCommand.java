@@ -1,6 +1,7 @@
 package us.zonix.hcfactions.profile.protection.command.subcommand;
 
 import org.bukkit.scheduler.BukkitRunnable;
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.profile.Profile;
 import us.zonix.hcfactions.profile.protection.life.ProfileProtectionLifeType;
 import us.zonix.hcfactions.util.PluginCommand;
@@ -36,7 +37,7 @@ public class ProfileProtectionReviveCommand extends PluginCommand {
             return;
         }
 
-        if (sender instanceof Player && !sender.hasPermission("pvp.revive.bypass")) {
+        if (sender instanceof Player && !us.zonix.core.profile.Profile.getByUuid(((Player) sender).getUniqueId()).getRank().isAboveOrEqual(Rank.TRIAL_MOD)) {
             Profile senderProfile = Profile.getByPlayer((Player) sender);
             if (senderProfile.getLives().get(ProfileProtectionLifeType.FRIEND) <= 0) {
                 sender.sendMessage(langFile.getString("PVP_PROTECTION.COMMAND.REVIVE.NOT_ENOUGH_LIVES").replace("%PLAYER%", profile.getName()));
@@ -49,7 +50,7 @@ public class ProfileProtectionReviveCommand extends PluginCommand {
             return;
         }
 
-        if (sender instanceof Player && !sender.hasPermission("pvp.revive.bypass")) {
+        if (sender instanceof Player && !us.zonix.core.profile.Profile.getByUuid(profile.getUuid()).getRank().isAboveOrEqual(Rank.TRIAL_MOD)) {
             Profile senderProfile = Profile.getByPlayer((Player) sender);
             senderProfile.getLives().put(ProfileProtectionLifeType.FRIEND, senderProfile.getLives().get(ProfileProtectionLifeType.FRIEND) - 1);
         }

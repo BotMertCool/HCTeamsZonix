@@ -5,16 +5,27 @@ import net.minecraft.server.v1_8_R3.PacketPlayInFlying;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import org.bukkit.entity.Boat;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 import us.zonix.hcfactions.FactionsPlugin;
+import us.zonix.hcfactions.claimwall.ClaimWallType;
+import us.zonix.hcfactions.factions.events.player.PlayerCancelFactionTeleportEvent;
 import us.zonix.hcfactions.factions.type.PlayerFaction;
 import us.zonix.hcfactions.factions.type.SystemFaction;
 import us.zonix.hcfactions.files.ConfigFile;
 import us.zonix.hcfactions.profile.Profile;
+import us.zonix.hcfactions.profile.cooldown.ProfileCooldownType;
+import us.zonix.hcfactions.profile.teleport.ProfileTeleportType;
+
+import static us.zonix.hcfactions.misc.listeners.BorderListener.isWithinBorder;
 
 public class CustomMovementHandler implements MovementHandler {
 
@@ -25,8 +36,94 @@ public class CustomMovementHandler implements MovementHandler {
 	@Override
 	public void handleUpdateLocation(Player p, Location to, Location from, PacketPlayInFlying packetPlayInFlying) {
 
+		Profile profile = Profile.getByPlayer(p);
+
+		if (from.getBlockX() != to.getBlockX() || from.getBlockY() != to.getBlockY() || from.getBlockZ() != to.getBlockZ()) {
+
+			if (profile.getTeleportWarmup() != null) {
+				if (profile.getTeleportWarmup().getEvent().getTeleportType() == ProfileTeleportType.HOME_TELEPORT) {
+					profile.getTeleportWarmup().getEvent().setCancelled(true);
+					Bukkit.getPluginManager().callEvent(new PlayerCancelFactionTeleportEvent(p, null, ProfileTeleportType.HOME_TELEPORT));
+					profile.setTeleportWarmup(null);
+					p.sendMessage(langConfig.getString("ERROR.TELEPORT_CANCELLED"));
+				}
+				else {
+					if (p.getLocation().distance(profile.getTeleportWarmup().getEvent().getInitialLocation()) >= mainConfig.getInt("TELEPORT_COUNTDOWN.STUCK.DISTANCE")) {
+						profile.getTeleportWarmup().getEvent().setCancelled(true);
+						Bukkit.getPluginManager().callEvent(new PlayerCancelFactionTeleportEvent(p, profile.getTeleportWarmup().getEvent().getFaction(), ProfileTeleportType.STUCK_TELEPORT));
+						profile.setTeleportWarmup(null);
+						p.sendMessage(langConfig.getString("ERROR.TELEPORT_CANCELLED"));
+					}
+				}
+			}
+		}
+
+		if (profile.getCooldownByType(ProfileCooldownType.LOGOUT) != null && profile.getLogoutLocation() != null) {
+			if (from.getBlockX() != to.getBlockX() || from.getBlockZ() != to.getBlockZ() || from.getBlockY() != to.getBlockY()) {
+				if (to.distance(profile.getLogoutLocation()) > mainConfig.getInt("COMBAT_LOGGER.LOGOUT_CANCEL_RANGE")) {
+					p.sendMessage(langConfig.getString("COMBAT_LOGGER.LOGOUT_CANCELLED"));
+					profile.getCooldowns().remove(profile.getCooldownByType(ProfileCooldownType.LOGOUT));
+					profile.setLogoutLocation(null);
+				}
+			}
+		}
+
+		if (profile.getCooldownByType(ProfileCooldownType.SPAWN_TAG) != null) {
+			Claim entering = Claim.getProminentClaimAt(to);
+			Claim leaving = Claim.getProminentClaimAt(from);
+
+			if (entering != null && (leaving == null || !leaving.equals(entering))) {
+				if (ClaimWallType.SPAWN_TAG.isValid(entering)) {
+					p.teleport(from);
+					p.setSprinting(false);
+
+					if (p.getVehicle() != null) {
+						p.getVehicle().eject();
+					}
+
+					p.setVelocity(new Vector());
+				}
+			}
+		}
+
+		if (profile.getProtection() != null) {
+			Claim entering = Claim.getProminentClaimAt(to);
+			Claim leaving = Claim.getProminentClaimAt(from);
+
+			if (entering != null && (leaving == null || !leaving.equals(entering))) {
+				if (ClaimWallType.PVP_PROTECTION.isValid(entering)) {
+					p.teleport(from);
+
+					if (p.getVehicle() != null) {
+						p.getVehicle().eject();
+					}
+
+					p.setSprinting(false);
+					p.setVelocity(new Vector());
+				}
+
+			}
+		}
+
+		if(!isWithinBorder(to) && isWithinBorder(from)) {
+
+			if(from.getBlockX() == to.getBlockX() && from.getBlockZ() == to.getBlockZ()) {
+				return;
+			}
+
+			p.sendMessage(ChatColor.RED + "You can't go past the border.");
+			p.teleport(from);
+			final Entity vehicle = p.getVehicle();
+			if(vehicle != null) {
+				vehicle.eject();
+				vehicle.teleport(from);
+				vehicle.setPassenger((Entity) p);
+
+			}
+		}
+
 		if (to.getX() != from.getX() || to.getZ() != from.getZ()) {
-			final Profile profile = Profile.getByPlayer(p);
+
 			final Claim claim = Claim.getProminentClaimAt(to);
 
 			if (claim != null) {

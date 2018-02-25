@@ -1,5 +1,7 @@
 package us.zonix.hcfactions.deathsign;
 
+import us.zonix.core.profile.Profile;
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.FactionsPlugin;
 import us.zonix.hcfactions.util.ItemBuilder;
 import org.bukkit.GameMode;
@@ -41,7 +43,7 @@ public class DeathSignListeners implements Listener {
         Player killer = player.getKiller();
         if (killer != null) {//TODO: add permission
             player.getWorld().dropItemNaturally(player.getLocation(), new DeathSign(killer.getName(), player.getName()).toItemStack());
-            if (killer.hasPermission("pvp.drop.skull")) {
+            if (Profile.getByUuid(killer.getUniqueId()).getRank().isAboveOrEqual(Rank.SILVER)) {
                 player.getWorld().dropItemNaturally(player.getLocation(), new ItemBuilder(Material.SKULL_ITEM).durability(3).owner(player.getName()).build());
             }
         }

@@ -3,6 +3,7 @@ package us.zonix.hcfactions.kits.command.subcommand;
 import net.md_5.bungee.api.ChatColor;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import us.zonix.hcfactions.kits.Kit;
 import us.zonix.hcfactions.kits.command.KitCommand;
 import us.zonix.hcfactions.util.PluginCommand;
@@ -11,6 +12,7 @@ import us.zonix.hcfactions.util.command.CommandArgs;
 import us.zonix.hcfactions.util.command.CommandArgs;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 public class KitUpdateCommand extends PluginCommand {
 
@@ -32,6 +34,11 @@ public class KitUpdateCommand extends PluginCommand {
             return;
         }
 
-        KitCommand.openUpdateInventory(player, kit);
+        kit.getItems().clear();
+
+        Collections.addAll(kit.getItems(), player.getInventory().getContents());
+        Collections.addAll(kit.getItems(), player.getInventory().getArmorContents());
+
+        kit.save();
     }
 }

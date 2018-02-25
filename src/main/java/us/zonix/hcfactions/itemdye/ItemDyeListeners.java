@@ -1,5 +1,7 @@
 package us.zonix.hcfactions.itemdye;
 
+import us.zonix.core.profile.Profile;
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.util.ItemBuilder;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
@@ -57,7 +59,7 @@ public class ItemDyeListeners implements Listener {
             int xp = 0;
             for (HumanEntity entity : event.getViewers()) {
                 Player player = (Player) entity;
-                if (player.getLevel() == 0 || !player.hasPermission("pvp.bottle.enchants")) {
+                if (player.getLevel() == 0 || !Profile.getByUuid(player.getUniqueId()).getRank().isAboveOrEqual(Rank.SILVER)) {
                     event.getInventory().setResult(new ItemStack(Material.AIR));
                     return;
                 } else {

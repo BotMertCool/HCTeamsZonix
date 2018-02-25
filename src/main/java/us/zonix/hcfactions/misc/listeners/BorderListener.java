@@ -22,7 +22,7 @@ public class BorderListener implements Listener {
     private static final int END_BORDER = FactionsPlugin.getInstance().getMainConfig().getInt("FACTION_GENERAL.END_BORDER");
     private static final int BORDER_OFFSET_TELEPORTS = 50;
 
-    private boolean isWithinBorder(final Location location) {
+    public static boolean isWithinBorder(final Location location) {
 
         int borderSize = 0;
 
@@ -76,28 +76,6 @@ public class BorderListener implements Listener {
         }
     }
 
-
-
-    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
-    public void onPlayerMove(final PlayerMoveEvent event) {
-        final Location from = event.getFrom();
-        final Location to = event.getTo();
-        if(from.getBlockX() == to.getBlockX() && from.getBlockZ() == to.getBlockZ()) {
-            return;
-        }
-        if(!isWithinBorder(to) && isWithinBorder(from)) {
-            final Player player = event.getPlayer();
-            player.sendMessage(ChatColor.RED + "You can't go past the border.");
-            event.setTo(from);
-            final Entity vehicle = player.getVehicle();
-            if(vehicle != null) {
-                vehicle.eject();
-                vehicle.teleport(from);
-                vehicle.setPassenger((Entity) player);
-
-            }
-        }
-    }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
     public void onPlayerPortal(final PlayerPortalEvent event) {

@@ -97,7 +97,7 @@ public class CrateListeners implements Listener {
                     if (crate != null) {
 
                         if(crate.getName().equalsIgnoreCase("KOTH")) {
-                            Bukkit.broadcastMessage(ChatColor.GOLD + "[KingOfTheHill] " + ChatColor.YELLOW + player.getName() + ChatColor.GOLD + " is obtaining loot for a " + ChatColor.BLUE + "KOTH Key" + ChatColor.GOLD + ".");
+                            Bukkit.broadcastMessage(ChatColor.GOLD + "[KOTH] " + ChatColor.YELLOW + player.getName() + ChatColor.GOLD + " is obtaining loot for a " + ChatColor.BLUE + "KOTH Key" + ChatColor.GOLD + ".");
                         }
 
                         StringJoiner itemJoiner = new StringJoiner(ChatColor.YELLOW + ", ");
@@ -122,7 +122,7 @@ public class CrateListeners implements Listener {
                         player.openInventory(inventory);
 
                         if(crate.getName().equalsIgnoreCase("KOTH")) {
-                            Bukkit.broadcastMessage(ChatColor.GOLD + "[KingOfTheHill] " + ChatColor.YELLOW + player.getName() + ChatColor.GOLD + " obtained: " + itemJoiner.toString() + ChatColor.GOLD + ".");
+                            Bukkit.broadcastMessage(ChatColor.GOLD + "[KOTH] " + ChatColor.YELLOW + player.getName() + ChatColor.GOLD + " obtained: " + itemJoiner.toString() + ChatColor.GOLD + ".");
                         }
                     }
                 }
