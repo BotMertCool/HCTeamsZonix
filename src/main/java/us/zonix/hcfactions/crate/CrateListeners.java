@@ -15,6 +15,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.permissions.PermissionAttachmentInfo;
+import us.zonix.core.rank.Rank;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,7 @@ public class CrateListeners implements Listener {
     public void onInventoryCloseEvent(InventoryCloseEvent event) {
         Player player = (Player) event.getPlayer();
         Inventory inventory = event.getInventory();
-        if (inventory.getTitle().contains("Items - 1/1") &&  player.hasPermission("crate.admin")) {
+        if (inventory.getTitle().contains("Items - 1/1") && us.zonix.core.profile.Profile.getByUuid(player.getUniqueId()).getRank().isAboveOrEqual(Rank.DEVELOPER)) {
             Crate crate = Crate.getByName(ChatColor.stripColor(inventory.getItem(4).getItemMeta().getLore().get(0).replace("Crate: ", "")));
             if (crate != null) {
                 List<ItemStack> toAdd = new ArrayList<>();
@@ -49,7 +50,7 @@ public class CrateListeners implements Listener {
     public void onInventoryClickEvent(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
         Inventory inventory = event.getInventory();
-        if (inventory.getTitle().contains("Items - 1/1") &&  player.hasPermission("crate.admin")) {
+        if (inventory.getTitle().contains("Items - 1/1") && us.zonix.core.profile.Profile.getByUuid(player.getUniqueId()).getRank().isAboveOrEqual(Rank.DEVELOPER)) {
             if (event.getRawSlot() <= 8) {
                 event.setCancelled(true);
             }

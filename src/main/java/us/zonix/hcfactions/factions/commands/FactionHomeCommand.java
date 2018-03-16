@@ -1,5 +1,6 @@
 package us.zonix.hcfactions.factions.commands;
 
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.factions.events.player.PlayerInitiateFactionTeleportEvent;
 import us.zonix.hcfactions.factions.type.SystemFaction;
 import us.zonix.hcfactions.profile.cooldown.ProfileCooldownType;
@@ -42,7 +43,7 @@ public class FactionHomeCommand extends FactionCommand {
         }
 
         Faction faction;
-        if (command.getArgs().length >= 1 && player.hasPermission("hcf.admin")) {
+        if (command.getArgs().length >= 1 && us.zonix.core.profile.Profile.getByUuid(player.getUniqueId()).getRank().isAboveOrEqual(Rank.DEVELOPER)) {
             String name = command.getArgs(0);
             Faction faction1 = PlayerFaction.getAnyByString(name);
             if (faction1 != null) {
@@ -75,7 +76,7 @@ public class FactionHomeCommand extends FactionCommand {
             return;
         }
 
-        if (player.hasPermission("hcf.admin") && command.getArgs().length >= 1) {
+        if (us.zonix.core.profile.Profile.getByUuid(player.getUniqueId()).getRank().isAboveOrEqual(Rank.DEVELOPER) && command.getArgs().length >= 1) {
             player.teleport(LocationSerialization.deserializeLocation(faction.getHome()));
         } else {
 

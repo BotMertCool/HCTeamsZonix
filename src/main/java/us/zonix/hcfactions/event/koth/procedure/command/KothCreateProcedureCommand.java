@@ -1,5 +1,6 @@
 package us.zonix.hcfactions.event.koth.procedure.command;
 
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.event.EventManager;
 import us.zonix.hcfactions.event.koth.procedure.KothCreateProcedure;
 import us.zonix.hcfactions.event.koth.procedure.KothCreateProcedureStage;
@@ -17,7 +18,7 @@ import us.zonix.hcfactions.util.command.CommandArgs;
 
 public class KothCreateProcedureCommand extends PluginCommand {
 
-    @Command(name = "koth.create", aliases = {"koth.new", "createkoth", "newkoth"}, permission = "koth.create")
+    @Command(name = "koth.create", aliases = {"koth.new", "createkoth", "newkoth"}, permission = Rank.DEVELOPER)
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();
         Profile profile = Profile.getByPlayer(player);

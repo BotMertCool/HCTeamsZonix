@@ -1,5 +1,6 @@
 package us.zonix.hcfactions.profile.protection.life.command.subcommand;
 
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.profile.Profile;
 import us.zonix.hcfactions.profile.protection.life.ProfileProtectionLifeType;
 import us.zonix.hcfactions.util.PluginCommand;
@@ -13,7 +14,7 @@ import us.zonix.hcfactions.profile.Profile;
 import us.zonix.hcfactions.util.command.CommandArgs;
 
 public class ProfileProtectionLifeRemoveCommand extends PluginCommand {
-    @Command(name = "lives.remove", aliases = {"lifes.remove", "lives.take", "lifes.take", "lives.delete", "lifes.delete"}, permission = "lives.remove", inGameOnly = false)
+    @Command(name = "lives.remove", aliases = {"lifes.remove", "lives.take", "lifes.take", "lives.delete", "lifes.delete"}, permission = Rank.MANAGER, inGameOnly = false)
     public void onCommand(CommandArgs command) {
         CommandSender sender = command.getSender();
         String[] args = command.getArgs();

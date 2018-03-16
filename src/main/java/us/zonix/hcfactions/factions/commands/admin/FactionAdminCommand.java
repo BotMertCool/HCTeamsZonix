@@ -1,5 +1,6 @@
 package us.zonix.hcfactions.factions.commands.admin;
 
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.factions.commands.FactionCommand;
 import us.zonix.hcfactions.profile.Profile;
 import us.zonix.hcfactions.util.command.Command;
@@ -14,7 +15,7 @@ import us.zonix.hcfactions.util.command.CommandArgs;
 
 public class FactionAdminCommand extends FactionCommand {
 
-    @Command(name = "f.admin", aliases = {"faction.admin", "factions.admin", "f.bypass", "faction.bypass", "factions.bypass"}, permission = "hcf.admin", inGameOnly = false)
+    @Command(name = "f.admin", aliases = {"faction.admin", "factions.admin", "f.bypass", "faction.bypass", "factions.bypass"}, permission = Rank.MANAGER, inGameOnly = false)
     public void onCommand(CommandArgs command) {
         CommandSender sender = command.getSender();
         String[] args = command.getArgs();

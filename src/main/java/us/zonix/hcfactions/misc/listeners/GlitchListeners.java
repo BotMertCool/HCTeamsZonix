@@ -2,6 +2,7 @@ package us.zonix.hcfactions.misc.listeners;
 
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Monster;
+import org.bukkit.event.block.LeavesDecayEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.potion.PotionEffect;
@@ -41,6 +42,11 @@ public class GlitchListeners implements Listener {
                 }.runTaskLaterAsynchronously(FactionsPlugin.getInstance(), 4L);
             }
         }
+    }
+
+    @EventHandler
+    public void onLeafDecay(LeavesDecayEvent event) {
+        event.setCancelled(true);
     }
 
     @EventHandler

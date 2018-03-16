@@ -1,5 +1,6 @@
 package us.zonix.hcfactions.mode.command;
 
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.mode.command.subcommand.ModeCreateCommand;
 import us.zonix.hcfactions.mode.command.subcommand.ModeDeleteCommand;
 import us.zonix.hcfactions.mode.command.subcommand.ModeStartCommand;
@@ -22,7 +23,7 @@ public class ModeCommand extends PluginCommand {
         new ModeStopCommand();
     }
 
-    @Command(name = "mode", permission = "mode.admin", inGameOnly = false)
+    @Command(name = "mode", permission = Rank.DEVELOPER, inGameOnly = false)
     public void onCommand(CommandArgs command) {
         CommandSender player = command.getSender();
         player.sendMessage(ChatColor.RED + "/mode create <name>");

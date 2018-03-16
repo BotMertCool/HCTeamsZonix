@@ -1,6 +1,7 @@
 package us.zonix.hcfactions.factions.commands.admin;
 
 import org.bukkit.command.ConsoleCommandSender;
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.factions.commands.FactionCommand;
 import us.zonix.hcfactions.factions.Faction;
 import us.zonix.hcfactions.factions.type.PlayerFaction;
@@ -15,7 +16,7 @@ import java.math.BigDecimal;
 
 public class FactionSetDtrCommand extends FactionCommand {
 
-    @Command(name = "f.setdtr", aliases = {"faction.setdtr", "factions.setdtr"}, permission = "hcf.setdtr", inGameOnly = false)
+    @Command(name = "f.setdtr", aliases = {"faction.setdtr", "factions.setdtr"}, permission = Rank.MANAGER, inGameOnly = false)
     public void onCommand(CommandArgs command) {
         CommandSender sender = command.getSender();
 

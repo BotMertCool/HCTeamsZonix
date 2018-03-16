@@ -1,5 +1,6 @@
 package us.zonix.hcfactions.mode.command.subcommand;
 
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.mode.ModeType;
 import us.zonix.hcfactions.util.PluginCommand;
 import net.md_5.bungee.api.ChatColor;
@@ -13,7 +14,7 @@ import us.zonix.hcfactions.util.command.Command;
 import us.zonix.hcfactions.util.command.CommandArgs;
 
 public class ModeCreateCommand extends PluginCommand {
-    @Command(name = "mode.create", permission = "mode.admin")
+    @Command(name = "mode.create", permission = Rank.DEVELOPER)
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();
         String[] args = command.getArgs();

@@ -2,6 +2,7 @@ package us.zonix.hcfactions.factions.claims;
 
 import org.bukkit.World;
 import org.bukkit.block.Sign;
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.FactionsPlugin;
 import us.zonix.hcfactions.factions.Faction;
 import org.bukkit.Bukkit;
@@ -65,7 +66,7 @@ public class ClaimListeners implements Listener {
             if (faction instanceof PlayerFaction) {
                 PlayerFaction playerFaction = (PlayerFaction) faction;
 
-                if (playerFaction.getLeader() != player.getUniqueId() && !playerFaction.getOfficers().contains(player.getUniqueId()) && !player.hasPermission("hcf.admin")) {
+                if (playerFaction.getLeader() != player.getUniqueId() && !playerFaction.getOfficers().contains(player.getUniqueId()) && !us.zonix.core.profile.Profile.getByUuid(player.getUniqueId()).getRank().isAboveOrEqual(Rank.DEVELOPER)) {
                     player.getInventory().removeItem(Faction.getWand());
                     claimProfile.removePillars();
                     return;
@@ -232,7 +233,7 @@ public class ClaimListeners implements Listener {
                 if (faction instanceof PlayerFaction) {
                     PlayerFaction playerFaction = (PlayerFaction) faction;
 
-                    if (playerFaction.getBalance() < price && !player.hasPermission("hcf.admin")) {
+                    if (playerFaction.getBalance() < price && !us.zonix.core.profile.Profile.getByUuid(player.getUniqueId()).getRank().isAboveOrEqual(Rank.DEVELOPER)) {
                         player.sendMessage(langConfig.getString("ERROR.FACTION_NOT_ENOUGH_MONEY"));
                         return;
                     }
@@ -694,10 +695,6 @@ public class ClaimListeners implements Listener {
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             Block block = event.getClickedBlock();
 
-            if(block.getType() == Material.WALL_SIGN || block.getType() == Material.SIGN_POST || block.getType() == Material.SIGN) {
-                return;
-            }
-
             if (block.getState() instanceof ContainerBlock || block.getState().getData() instanceof Redstone || block.getState().getData() instanceof Openable) {
                 Claim claim = Claim.getProminentClaimAt(block.getLocation());
 
@@ -709,10 +706,6 @@ public class ClaimListeners implements Listener {
                     }
 
                     if (!faction.equals(profile.getFaction())) {
-
-                        if(block.getType() == Material.WALL_SIGN || block.getType() == Material.SIGN_POST || block.getType() == Material.SIGN) {
-                            return;
-                        }
 
                         if (faction instanceof SystemFaction) {
                             SystemFaction systemFaction = (SystemFaction) faction;
@@ -754,10 +747,6 @@ public class ClaimListeners implements Listener {
                 Faction faction = claim.getFaction();
 
                 if (faction instanceof PlayerFaction && ((PlayerFaction) faction).isRaidable()) {
-                    return;
-                }
-
-                if(block.getType() == Material.WALL_SIGN || block.getType() == Material.SIGN_POST || block.getType() == Material.SIGN) {
                     return;
                 }
 

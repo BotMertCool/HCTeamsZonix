@@ -1,5 +1,6 @@
 package us.zonix.hcfactions.misc.commands.economy;
 
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.profile.Profile;
 import us.zonix.hcfactions.util.PluginCommand;
 import org.apache.commons.lang.StringUtils;
@@ -16,7 +17,7 @@ import us.zonix.hcfactions.util.command.CommandArgs;
 
 public class AddBalanceCommand extends PluginCommand {
 
-    @Command(name = "addbalance", aliases = {"addbal", "addmoney"}, permission = "hcf.addbalance")
+    @Command(name = "addbalance", aliases = {"addbal", "addmoney"}, permission = Rank.MANAGER)
     public void onCommand(CommandArgs command) {
         CommandSender sender = command.getSender();
         String[] args = command.getArgs();

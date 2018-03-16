@@ -1,5 +1,6 @@
 package us.zonix.hcfactions.factions.commands.officer;
 
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.factions.commands.FactionCommand;
 import us.zonix.hcfactions.factions.Faction;
 import us.zonix.hcfactions.factions.type.PlayerFaction;
@@ -26,7 +27,7 @@ public class FactionRenameCommand extends FactionCommand {
         }
 
         Faction faction;
-        if (command.getArgs().length >= 2 && player.hasPermission("hcf.admin")) {
+        if (command.getArgs().length >= 2 && us.zonix.core.profile.Profile.getByUuid(player.getUniqueId()).getRank().isAboveOrEqual(Rank.DEVELOPER)) {
             String name = command.getArgs(0);
             Faction faction1 = PlayerFaction.getAnyByString(name);
             if (faction1 != null) {
@@ -45,7 +46,7 @@ public class FactionRenameCommand extends FactionCommand {
 
             PlayerFaction playerFaction = (PlayerFaction) faction;
 
-            if (!playerFaction.getLeader().equals(player.getUniqueId()) && !playerFaction.getOfficers().contains(player.getUniqueId()) && !player.hasPermission("hcf.system")) {
+            if (!playerFaction.getLeader().equals(player.getUniqueId()) && !playerFaction.getOfficers().contains(player.getUniqueId()) && !us.zonix.core.profile.Profile.getByUuid(player.getUniqueId()).getRank().isAboveOrEqual(Rank.DEVELOPER)) {
                 player.sendMessage(langConfig.getString("ERROR.NOT_OFFICER_OR_LEADER"));
                 return;
             }
@@ -54,7 +55,7 @@ public class FactionRenameCommand extends FactionCommand {
 
         StringBuilder sb = new StringBuilder();
         int start = 0;
-        if (command.getArgs().length >= 2 && player.hasPermission("hcf.admin")) {
+        if (command.getArgs().length >= 2 && us.zonix.core.profile.Profile.getByUuid(player.getUniqueId()).getRank().isAboveOrEqual(Rank.DEVELOPER)) {
             start = 1;
         }
         for (int i = start; i < command.getArgs().length; i++) {

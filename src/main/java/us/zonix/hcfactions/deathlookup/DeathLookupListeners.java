@@ -1,5 +1,6 @@
 package us.zonix.hcfactions.deathlookup;
 
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.profile.Profile;
 import us.zonix.hcfactions.profile.fight.ProfileFight;
 import org.bukkit.Bukkit;
@@ -30,7 +31,7 @@ public class DeathLookupListeners implements Listener {
             String displayName = itemStack.getItemMeta().getDisplayName();
             DeathLookup lookup = profile.getDeathLookup();
 
-            if (((title.contains("Deaths") || title.contains("Death #") || title.contains("Inventory #")) && player.hasPermission("death.lookup") && lookup != null)) {
+            if (((title.contains("Deaths") || title.contains("Death #") || title.contains("Inventory #")) && us.zonix.core.profile.Profile.getByUuid(player.getUniqueId()).getRank().isAboveOrEqual(Rank.ADMINISTRATOR) && lookup != null)) {
                 event.setCancelled(true);
 
                 if (displayName == null) {

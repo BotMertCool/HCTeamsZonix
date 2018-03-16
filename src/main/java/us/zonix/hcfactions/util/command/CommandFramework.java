@@ -2,19 +2,14 @@ package us.zonix.hcfactions.util.command;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandMap;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.PluginCommand;
+import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 import org.bukkit.help.GenericCommandHelpTopic;
 import org.bukkit.help.HelpTopic;
 import org.bukkit.help.HelpTopicComparator;
 import org.bukkit.help.IndexHelpTopic;
 import org.bukkit.plugin.SimplePluginManager;
-import us.zonix.hcfactions.FactionsPlugin;
-import us.zonix.hcfactions.factions.type.PlayerFaction;
-import us.zonix.hcfactions.profile.Profile;
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.FactionsPlugin;
 import us.zonix.hcfactions.factions.type.PlayerFaction;
 import us.zonix.hcfactions.profile.Profile;
@@ -72,14 +67,24 @@ public class CommandFramework implements CommandExecutor {
                     return true;
                 }
 
-                if (!command.permission().equals("") && !sender.hasPermission(command.permission())) {
-                    sender.sendMessage(plugin.getLanguageConfig().getString("ERROR.NO_PERMISSION"));
-                    return true;
-                }
-
                 if (command.inGameOnly() && !(sender instanceof Player)) {
                     sender.sendMessage(ChatColor.RED + "This command is only performable in game.");
                     return true;
+                }
+
+                if (sender instanceof Player) {
+                    Player player = (Player) sender;
+                    us.zonix.core.profile.Profile profile = us.zonix.core.profile.Profile.getByUuid(player.getUniqueId());
+
+                    if (profile == null) {
+                        throw new CommandException("Could not retrieve profile while executing command");
+                    }
+                    else {
+                        if (!profile.getRank().isAboveOrEqual(command.permission())) {
+                            player.sendMessage(ChatColor.RED + "You do not have permission to use that command.");
+                            return true;
+                        }
+                    }
                 }
 
                 if (command.inGameOnly() && sender instanceof Player && command.inFactionOnly()) {
@@ -91,12 +96,12 @@ public class CommandFramework implements CommandExecutor {
                         return true;
                     }
 
-                    if (command.isLeaderOnly() && !faction.getLeader().equals(profile.getUuid()) && !sender.hasPermission("hcf.admin")) {
+                    if (command.isLeaderOnly() && !faction.getLeader().equals(profile.getUuid()) && !us.zonix.core.profile.Profile.getByUuid(profile.getUuid()).getRank().isAboveOrEqual(Rank.DEVELOPER)) {
                         sender.sendMessage(plugin.getLanguageConfig().getString("ERROR.NOT_LEADER"));
                         return true;
                     }
 
-                    if (command.isOfficerOnly() && !faction.getLeader().equals(profile.getUuid()) && !faction.getOfficers().contains(profile.getUuid()) && !sender.hasPermission("hcf.admin")) {
+                    if (command.isOfficerOnly() && !faction.getLeader().equals(profile.getUuid()) && !faction.getOfficers().contains(profile.getUuid()) && !us.zonix.core.profile.Profile.getByUuid(profile.getUuid()).getRank().isAboveOrEqual(Rank.DEVELOPER)) {
                         sender.sendMessage(plugin.getLanguageConfig().getString("ERROR.NOT_OFFICER_OR_LEADER"));
                         return true;
                     }

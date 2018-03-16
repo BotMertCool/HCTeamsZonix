@@ -1,5 +1,6 @@
 package us.zonix.hcfactions.factions.commands.officer;
 
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.factions.Faction;
 import us.zonix.hcfactions.factions.claims.Claim;
 import us.zonix.hcfactions.factions.commands.FactionCommand;
@@ -50,7 +51,7 @@ public class FactionUnclaimCommand extends FactionCommand {
 
         Faction faction;
         PlayerFaction playerFaction = null;
-        if (command.getArgs().length >= 2 && player.hasPermission("hcf.admin")) {
+        if (command.getArgs().length >= 2 && us.zonix.core.profile.Profile.getByUuid(player.getUniqueId()).getRank().isAboveOrEqual(Rank.DEVELOPER)) {
             String name = command.getArgs(1);
             Faction faction1 = PlayerFaction.getAnyByString(name);
             if (faction1 != null) {
@@ -69,7 +70,7 @@ public class FactionUnclaimCommand extends FactionCommand {
 
             if (faction == null) {
                 Claim claim = Claim.getProminentClaimAt(player.getLocation());
-                if (claim != null && player.hasPermission("hcf.admin")) {
+                if (claim != null && us.zonix.core.profile.Profile.getByUuid(player.getUniqueId()).getRank().isAboveOrEqual(Rank.DEVELOPER)) {
                     faction = claim.getFaction();
                     playerFaction = null;
                 } else {
@@ -78,7 +79,7 @@ public class FactionUnclaimCommand extends FactionCommand {
                 }
             }
 
-            if (playerFaction != null && !playerFaction.getLeader().equals(player.getUniqueId()) && !playerFaction.getOfficers().contains(player.getUniqueId()) && !player.hasPermission("hcf.admin")) {
+            if (playerFaction != null && !playerFaction.getLeader().equals(player.getUniqueId()) && !playerFaction.getOfficers().contains(player.getUniqueId()) && !us.zonix.core.profile.Profile.getByUuid(player.getUniqueId()).getRank().isAboveOrEqual(Rank.DEVELOPER)) {
                 player.sendMessage(langConfig.getString("ERROR.NOT_OFFICER_OR_LEADER"));
                 return;
             }
@@ -91,7 +92,7 @@ public class FactionUnclaimCommand extends FactionCommand {
                 return;
             }
 
-            if ((playerFaction != null && !playerFaction.getLeader().equals(player.getUniqueId())) && !player.hasPermission("hcf.admin")) {
+            if ((playerFaction != null && !playerFaction.getLeader().equals(player.getUniqueId())) && !us.zonix.core.profile.Profile.getByUuid(player.getUniqueId()).getRank().isAboveOrEqual(Rank.DEVELOPER)) {
                 player.sendMessage(langConfig.getString("ERROR.NOT_LEADER"));
                 return;
             }

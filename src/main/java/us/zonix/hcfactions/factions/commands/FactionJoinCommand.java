@@ -1,5 +1,6 @@
 package us.zonix.hcfactions.factions.commands;
 
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.factions.Faction;
 import us.zonix.hcfactions.factions.events.player.PlayerJoinFactionEvent;
 import us.zonix.hcfactions.factions.type.PlayerFaction;
@@ -44,7 +45,7 @@ public class FactionJoinCommand extends FactionCommand {
         if (faction == null || (!(faction instanceof PlayerFaction) || (!(playerFaction.getInvitedPlayers().containsKey(player.getUniqueId()))))) {
             playerFaction = PlayerFaction.getByPlayerName(factionName);
 
-            if (playerFaction == null || !(playerFaction.getInvitedPlayers().containsKey(player.getUniqueId())) && !player.hasPermission("hcf.admin")) {
+            if (playerFaction == null || !(playerFaction.getInvitedPlayers().containsKey(player.getUniqueId())) && !us.zonix.core.profile.Profile.getByUuid(player.getUniqueId()).getRank().isAboveOrEqual(Rank.DEVELOPER)) {
                 player.sendMessage(langConfig.getString("ERROR.NOT_INVITED"));
                 return;
             }

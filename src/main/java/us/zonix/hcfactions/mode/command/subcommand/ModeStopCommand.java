@@ -1,5 +1,6 @@
 package us.zonix.hcfactions.mode.command.subcommand;
 
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.event.EventManager;
 import us.zonix.hcfactions.event.koth.KothEvent;
 import us.zonix.hcfactions.mode.ModeType;
@@ -16,7 +17,7 @@ import us.zonix.hcfactions.event.EventManager;
 import us.zonix.hcfactions.util.command.CommandArgs;
 
 public class ModeStopCommand extends PluginCommand {
-    @Command(name = "mode.stop", permission = "mode.admin")
+    @Command(name = "mode.stop", permission = Rank.DEVELOPER)
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();
         String[] args = command.getArgs();

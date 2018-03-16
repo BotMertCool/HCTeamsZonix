@@ -1,5 +1,6 @@
 package us.zonix.hcfactions.crate.command.subcommand;
 
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.util.PluginCommand;
 import us.zonix.hcfactions.util.command.Command;
 import us.zonix.hcfactions.util.command.CommandArgs;
@@ -15,7 +16,7 @@ import us.zonix.hcfactions.util.command.CommandArgs;
 import static com.mongodb.client.model.Filters.eq;
 
 public class CrateDeleteCommand extends PluginCommand {
-    @Command(name = "ccrate.delete", permission = "crate.admin")
+    @Command(name = "ccrate.delete", permission = Rank.DEVELOPER)
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();
         String[] args = command.getArgs();

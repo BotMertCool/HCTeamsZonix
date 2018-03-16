@@ -1,5 +1,6 @@
 package us.zonix.hcfactions.factions.commands.admin;
 
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.factions.commands.FactionCommand;
 import us.zonix.hcfactions.util.command.Command;
 import us.zonix.hcfactions.factions.Faction;
@@ -12,7 +13,7 @@ import us.zonix.hcfactions.util.command.CommandArgs;
 
 public class FactionThawCommand extends FactionCommand {
 
-    @Command(name = "f.thaw", aliases = {"faction.thaw", "factions.thaw"}, permission = "hcf.thaw", inGameOnly = false)
+    @Command(name = "f.thaw", aliases = {"faction.thaw", "factions.thaw"}, permission = Rank.ADMINISTRATOR, inGameOnly = false)
     public void onCommand(CommandArgs command) {
         CommandSender sender = command.getSender();
 

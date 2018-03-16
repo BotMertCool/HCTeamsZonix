@@ -1,5 +1,6 @@
 package us.zonix.hcfactions.deathlookup;
 
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.profile.Profile;
 import us.zonix.hcfactions.util.PluginCommand;
 import us.zonix.hcfactions.util.command.Command;
@@ -18,7 +19,7 @@ import static com.mongodb.client.model.Filters.eq;
  */
 public class DeathLookupCommand extends PluginCommand {
 
-    @Command(name = "deathlookup", aliases = {"lookupdeath", "dl"}, permission = "death.lookup")
+    @Command(name = "deathlookup", aliases = {"lookupdeath", "dl"}, permission = Rank.SENIOR_MODERATOR)
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();
         Profile profile = Profile.getByPlayer(player);

@@ -1,5 +1,6 @@
 package us.zonix.hcfactions.crate.command.subcommand;
 
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.crate.Crate;
 import us.zonix.hcfactions.util.PluginCommand;
 import us.zonix.hcfactions.util.command.Command;
@@ -10,7 +11,7 @@ import org.bukkit.entity.Player;
 import us.zonix.hcfactions.util.command.CommandArgs;
 
 public class CrateCreateCommand extends PluginCommand {
-    @Command(name = "ccrate.create", permission = "crate.admin")
+    @Command(name = "ccrate.create", permission = Rank.DEVELOPER)
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();
         String[] args = command.getArgs();

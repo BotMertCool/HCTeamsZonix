@@ -1,5 +1,6 @@
 package us.zonix.hcfactions.event.glowstone.command;
 
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.util.PluginCommand;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -17,7 +18,7 @@ import us.zonix.hcfactions.util.command.CommandArgs;
 
 public class GlowstoneForceCommand extends PluginCommand {
 
-    @Command(name = "glowstone.force", permission = "glowstone.force")
+    @Command(name = "glowstone.force", permission = Rank.MANAGER)
     public void onCommand(CommandArgs command) {
         CommandSender sender = command.getSender();
         String[] args = command.getArgs();

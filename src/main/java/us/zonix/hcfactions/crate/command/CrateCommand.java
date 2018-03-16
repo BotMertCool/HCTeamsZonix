@@ -1,5 +1,6 @@
 package us.zonix.hcfactions.crate.command;
 
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.crate.command.subcommand.*;
 import us.zonix.hcfactions.crate.command.subcommand.*;
 import us.zonix.hcfactions.util.PluginCommand;
@@ -21,7 +22,7 @@ public class CrateCommand extends PluginCommand {
         new CrateListCommand();
     }
 
-    @Command(name = "ccrate", permission = "crate.admin", inGameOnly = false)
+    @Command(name = "ccrate", permission = Rank.DEVELOPER, inGameOnly = false)
     public void onCommand(CommandArgs command) {
         CommandSender player = command.getSender();
         player.sendMessage(ChatColor.RED + "/ccreate list");

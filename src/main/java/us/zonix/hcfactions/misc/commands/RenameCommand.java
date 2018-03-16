@@ -6,6 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.util.PluginCommand;
 import us.zonix.hcfactions.util.command.Command;
 import us.zonix.hcfactions.util.command.CommandArgs;
@@ -15,7 +16,7 @@ import us.zonix.hcfactions.util.command.CommandArgs;
 
 public class RenameCommand extends PluginCommand {
 
-    @Command(name = "rename", permission = "commands.rename")
+    @Command(name = "rename", permission = Rank.DEVELOPER)
     public void onCommand(final CommandArgs command) {
         final Player player = (Player)command.getSender();
         if (player.getItemInHand() == null || player.getItemInHand().getType() == Material.AIR) {

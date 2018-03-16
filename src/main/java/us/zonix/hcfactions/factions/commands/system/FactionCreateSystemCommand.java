@@ -1,5 +1,6 @@
 package us.zonix.hcfactions.factions.commands.system;
 
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.factions.Faction;
 import us.zonix.hcfactions.factions.commands.FactionCommand;
 import us.zonix.hcfactions.factions.type.SystemFaction;
@@ -16,7 +17,7 @@ import us.zonix.hcfactions.util.command.CommandArgs;
  * explicit permission from original author: Alexander Maxwell
  */
 public class FactionCreateSystemCommand extends FactionCommand {
-    @Command(name = "f.createsystem", aliases = {"faction.createsystem", "factions.createsystem"}, inGameOnly = false, permission = "hcf.admin")
+    @Command(name = "f.createsystem", aliases = {"faction.createsystem", "factions.createsystem"}, inGameOnly = false, permission = Rank.DEVELOPER)
     public void onCommand(CommandArgs command) {
         CommandSender sender = command.getPlayer();
 

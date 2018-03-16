@@ -1,5 +1,6 @@
 package us.zonix.hcfactions.profile.kit.command;
 
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.profile.Profile;
 import us.zonix.hcfactions.profile.kit.ProfileKitEnergy;
 import us.zonix.hcfactions.util.PluginCommand;
@@ -23,7 +24,7 @@ import us.zonix.hcfactions.util.command.CommandArgs;
 import java.util.Random;
 
 public class ProfileKitCommand extends PluginCommand {
-    @Command(name = "pvp.kit", aliases = {"pvp.class", "class"}, permission = "class.admin")
+    @Command(name = "pvp.kit", aliases = {"pvp.class", "class"}, permission = Rank.DEVELOPER)
     public void onCommand(CommandArgs command) {
         CommandSender sender = command.getSender();
         String[] args = command.getArgs();

@@ -1,5 +1,6 @@
 package us.zonix.hcfactions.event.glowstone.procedure.command;
 
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.event.EventManager;
 import us.zonix.hcfactions.event.glowstone.procedure.GlowstoneCreateProcedure;
 import us.zonix.hcfactions.event.glowstone.procedure.GlowstoneCreateProcedureStage;
@@ -19,7 +20,7 @@ import us.zonix.hcfactions.util.command.CommandArgs;
 
 public class GlowstoneProcedureCommand extends PluginCommand {
 
-    @Command(name = "glowstone.create", aliases = {"glowstone.new", "createglowstone", "newglowstone"}, permission = "glowstone.create")
+    @Command(name = "glowstone.create", aliases = {"glowstone.new", "createglowstone", "newglowstone"}, permission = Rank.DEVELOPER)
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();
         Profile profile = Profile.getByPlayer(player);

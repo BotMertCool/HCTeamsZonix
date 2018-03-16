@@ -6,6 +6,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.kits.Kit;
 import us.zonix.hcfactions.profile.Profile;
 import us.zonix.hcfactions.profile.protection.life.ProfileProtectionLifeType;
@@ -21,7 +22,7 @@ import java.util.UUID;
 
 public class MedicReviveCommand extends PluginCommand {
 
-    @Command(name = "medic.revive", aliases = {"medic.revive", "medic"}, inGameOnly = true, permission = "medic.revive")
+    @Command(name = "medic.revive", aliases = {"medic.revive", "medic"}, inGameOnly = true, permission = Rank.ZONIX)
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();
         String[] args = command.getArgs();

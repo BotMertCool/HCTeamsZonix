@@ -21,7 +21,7 @@ public class SpawnCommand extends PluginCommand {
         CommandSender sender = command.getSender();
         String[] args = command.getArgs();
 
-        if (!(sender.hasPermission("hcf.spawn"))) {
+        if (!(sender.isOp())) {
             sender.sendMessage("Unknown command. Type \"/help\" for help.");
             return;
         }

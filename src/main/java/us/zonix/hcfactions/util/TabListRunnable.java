@@ -1,13 +1,8 @@
 package us.zonix.hcfactions.util;
 
-import com.google.common.collect.Multimap;
-import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.properties.Property;
-import net.minecraft.server.v1_8_R3.WorldSettings;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import us.zonix.core.CorePlugin;
@@ -29,7 +24,7 @@ import java.util.*;
 
 public class TabListRunnable extends BukkitRunnable {
 
-    TabList tabList = CorePlugin.getInstance().getTabListManager().getTabList();
+    private TabList tabList = CorePlugin.getInstance().getTabListManager().getTabList();
 
     @Override
     public void run() {
@@ -41,6 +36,7 @@ public class TabListRunnable extends BukkitRunnable {
             if (profile == null) {
                 continue;
             }
+
 
             if (profile.getOptions().getModifyTabList() == ProfileOptionsItemState.TAB_VANILLA) {
 
@@ -113,6 +109,13 @@ public class TabListRunnable extends BukkitRunnable {
                 }
             } else {
                 tabList.updateSlot(player, 10, 0, ChatColor.GRAY + "None");
+                tabList.updateSlot(player, 11, 0, "");
+                tabList.updateSlot(player, 12, 0, "");
+                tabList.updateSlot(player, 13, 0, "");
+
+                for(int i = 4; i < 20; i++) {
+                    tabList.updateSlot(player, i, 1, "");
+                }
             }
 
             for (Event possibleEvent : EventManager.getInstance().getEvents()) {
@@ -121,6 +124,10 @@ public class TabListRunnable extends BukkitRunnable {
                     tabList.updateSlot(player, 14, 0, ChatColor.RED + "KOTH Info");
                     tabList.updateSlot(player, 15, 0, ChatColor.GRAY + "Name: " + ChatColor.YELLOW + koth.getName());
                     tabList.updateSlot(player, 16, 0, "" + ChatColor.GRAY + (FactionsPlugin.getInstance().isKitmapMode() ? this.getKitMapKothLocation(koth) : this.getKothLocation(koth)));
+                } else {
+                    tabList.updateSlot(player, 14, 0, "");
+                    tabList.updateSlot(player, 15, 0, "");
+                    tabList.updateSlot(player, 16, 0, "");
                 }
             }
 
@@ -144,6 +151,7 @@ public class TabListRunnable extends BukkitRunnable {
                     tabList.updateSlot(player, count, 2, this.getFixedFactionName(player, sortedEntry.getKey()) + ChatColor.GRAY + " (" + sortedEntry.getValue() + ")");
                     ++count;
                 }
+
             } else if (profile.getOptions().getModifyTabList() == ProfileOptionsItemState.TAB_DETAILED) {
                 tabList.updateSlot(player, 0, 2, ChatColor.RED + "End Portals");
                 tabList.updateSlot(player, 1, 2, ChatColor.GRAY + "Only At");

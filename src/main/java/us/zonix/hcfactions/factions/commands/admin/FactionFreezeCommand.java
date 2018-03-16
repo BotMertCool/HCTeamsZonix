@@ -1,5 +1,6 @@
 package us.zonix.hcfactions.factions.commands.admin;
 
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.factions.commands.FactionCommand;
 import us.zonix.hcfactions.util.command.Command;
 import us.zonix.hcfactions.factions.Faction;
@@ -10,7 +11,7 @@ import org.bukkit.command.CommandSender;
 
 public class FactionFreezeCommand extends FactionCommand {
 
-    @Command(name = "faction.freeze", aliases = {"f.freeze", "factions.freeze"}, permission = "hcf.freeze", inGameOnly = false)
+    @Command(name = "faction.freeze", aliases = {"f.freeze", "factions.freeze"}, permission = Rank.ADMINISTRATOR, inGameOnly = false)
     public void onCommand(CommandArgs command) {
         CommandSender sender = command.getSender();
 

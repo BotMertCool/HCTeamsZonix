@@ -1,5 +1,6 @@
 package us.zonix.hcfactions.event.koth.command;
 
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.event.EventManager;
 import us.zonix.hcfactions.event.koth.KothEvent;
 import us.zonix.hcfactions.util.DateUtil;
@@ -14,7 +15,7 @@ public class KothStartCommand extends PluginCommand {
 
     private static final long DEFAULT_DURATION = 900000;
 
-    @Command(name = "koth.start", permission = "koth.start")
+    @Command(name = "koth.start", permission = Rank.MANAGER)
     public void onCommand(CommandArgs command) {
         CommandSender sender = command.getSender();
         String[] args = command.getArgs();

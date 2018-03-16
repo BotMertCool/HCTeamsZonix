@@ -2,6 +2,7 @@ package us.zonix.hcfactions.factions.commands.leader;
 
 import org.bukkit.Location;
 import org.bukkit.scheduler.BukkitRunnable;
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.claimwall.ClaimWall;
 import us.zonix.hcfactions.claimwall.ClaimWallType;
 import us.zonix.hcfactions.factions.Faction;
@@ -41,7 +42,7 @@ public class FactionDisbandCommand extends FactionCommand {
         Profile profile = Profile.getByPlayer(player);
         PlayerFaction playerFaction;
 
-        if (command.getArgs().length >= 1 && player.hasPermission("hcf.admin")) {
+        if (command.getArgs().length >= 1 && us.zonix.core.profile.Profile.getByUuid(player.getUniqueId()).getRank().isAboveOrEqual(Rank.DEVELOPER)) {
             String name = command.getArgs(0);
 
 

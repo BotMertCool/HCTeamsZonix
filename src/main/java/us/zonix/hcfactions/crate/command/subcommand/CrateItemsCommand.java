@@ -1,5 +1,6 @@
 package us.zonix.hcfactions.crate.command.subcommand;
 
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.util.PluginCommand;
 import us.zonix.hcfactions.crate.Crate;
 import us.zonix.hcfactions.util.ItemBuilder;
@@ -16,7 +17,7 @@ import us.zonix.hcfactions.util.command.CommandArgs;
 import java.util.Arrays;
 
 public class CrateItemsCommand extends PluginCommand {
-    @Command(name = "ccrate.items", permission = "crate.admin")
+    @Command(name = "ccrate.items", permission = Rank.DEVELOPER)
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();
         String[] args = command.getArgs();

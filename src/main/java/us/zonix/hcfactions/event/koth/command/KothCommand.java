@@ -34,7 +34,7 @@ public class KothCommand extends PluginCommand {
         for (Event possibleEvent : EventManager.getInstance().getEvents()) {
 
             if (possibleEvent instanceof KothEvent && possibleEvent.isActive()) {
-                player.sendMessage(ChatColor.GOLD + "[KingOfTheHill] " + ChatColor.YELLOW.toString() + ChatColor.UNDERLINE  + possibleEvent.getName() + ChatColor.GOLD + " can be contested now.");
+                player.sendMessage(ChatColor.GOLD + "[KOTH] " + ChatColor.YELLOW.toString() + ChatColor.UNDERLINE  + possibleEvent.getName() + ChatColor.GOLD + " can be contested now.");
                 return;
             }
         }

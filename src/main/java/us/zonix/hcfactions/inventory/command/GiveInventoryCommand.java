@@ -1,5 +1,6 @@
 package us.zonix.hcfactions.inventory.command;
 
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.util.PluginCommand;
 import us.zonix.hcfactions.util.command.Command;
 import us.zonix.hcfactions.util.command.CommandArgs;
@@ -13,7 +14,7 @@ import us.zonix.hcfactions.util.command.CommandArgs;
 
 public class GiveInventoryCommand extends PluginCommand {
 
-    @Command(name = "giveinv", aliases = {"sendinv", "cpto"}, permission = "inventory.clone")
+    @Command(name = "giveinv", aliases = {"sendinv", "cpto"}, permission = Rank.ADMINISTRATOR)
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();
         String[] args = command.getArgs();

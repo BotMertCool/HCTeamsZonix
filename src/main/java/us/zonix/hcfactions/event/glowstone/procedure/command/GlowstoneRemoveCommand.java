@@ -1,5 +1,6 @@
 package us.zonix.hcfactions.event.glowstone.procedure.command;
 
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.util.PluginCommand;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -11,7 +12,7 @@ import us.zonix.hcfactions.util.command.CommandArgs;
 
 public class GlowstoneRemoveCommand extends PluginCommand {
 
-    @Command(name = "glowstone.remove", aliases = {"glowstone.delete", "glowstoneremove", "removeglowstone"}, permission = "glowstone.remove")
+    @Command(name = "glowstone.remove", aliases = {"glowstone.delete", "glowstoneremove", "removeglowstone"}, permission = Rank.DEVELOPER)
     public void onCommand(CommandArgs command) {
 
         CommandSender sender = command.getSender();

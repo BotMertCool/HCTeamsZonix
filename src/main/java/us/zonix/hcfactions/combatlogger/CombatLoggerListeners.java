@@ -2,6 +2,7 @@ package us.zonix.hcfactions.combatlogger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventPriority;
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.deathsign.DeathSign;
 import us.zonix.hcfactions.factions.Faction;
 import us.zonix.hcfactions.factions.claims.Claim;
@@ -252,7 +253,7 @@ public class CombatLoggerListeners implements Listener {
                 Player killer = entity.getKiller();
                 entity.getWorld().dropItemNaturally(entity.getLocation(), new DeathSign(killer.getName(), logger.getName()).toItemStack());
 
-                if (killer.hasPermission("pvp.drop.skull")) {
+                if (us.zonix.core.profile.Profile.getByUuid(killer.getUniqueId()).getRank().isAboveOrEqual(Rank.SILVER)) {
                     entity.getWorld().dropItemNaturally(entity.getLocation(), new ItemBuilder(Material.SKULL_ITEM).durability(3).owner(logger.getName()).build());
                 }
 

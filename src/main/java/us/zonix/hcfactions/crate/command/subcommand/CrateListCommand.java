@@ -1,5 +1,6 @@
 package us.zonix.hcfactions.crate.command.subcommand;
 
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.crate.Crate;
 import us.zonix.hcfactions.util.PluginCommand;
 import us.zonix.hcfactions.util.command.Command;
@@ -9,7 +10,7 @@ import org.bukkit.command.CommandSender;
 import us.zonix.hcfactions.util.command.CommandArgs;
 
 public class CrateListCommand extends PluginCommand {
-    @Command(name = "ccrate.list", permission = "crate.admin", inGameOnly = false)
+    @Command(name = "ccrate.list", permission = Rank.DEVELOPER, inGameOnly = false)
     public void onCommand(CommandArgs command) {
         CommandSender sender = command.getSender();
 

@@ -76,6 +76,15 @@ public class BorderListener implements Listener {
         }
     }
 
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
+    public void onPlayerTeleport(final PlayerTeleportEvent event) {
+        final Location to = event.getTo();
+
+        if(isWithinBorder(to)) {
+            event.setCancelled(true);
+            event.getPlayer().sendMessage(ChatColor.RED + "You cannot go past the border.");
+        }
+    }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
     public void onPlayerPortal(final PlayerPortalEvent event) {

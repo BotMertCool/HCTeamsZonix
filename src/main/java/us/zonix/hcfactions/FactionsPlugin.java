@@ -167,11 +167,11 @@ public class FactionsPlugin extends JavaPlugin {
 
         ClubSpigot.INSTANCE.addMovementHandler(new CustomMovementHandler());
 
-        CorePlugin.getInstance().useTabList();
-        CorePlugin.getInstance().getTabListManager().getTabList().setHead(UUID.fromString("6b22037d-c043-4271-94f2-adb00368bf16"));
+        //CorePlugin.getInstance().useTabList();
+        //CorePlugin.getInstance().getTabListManager().getTabList().setHead(UUID.fromString("6b22037d-c043-4271-94f2-adb00368bf16"));
 
         CorePlugin.getInstance().setBoardManager(new BoardManager(new FactionsBoardAdapter(this)));
-        this.getServer().getScheduler().runTaskTimerAsynchronously(this, new TabListRunnable(), 20L, 20L);
+       // this.getServer().getScheduler().runTaskTimerAsynchronously(this, new TabListRunnable(), 20L, 20L);
     }
 
     public void onDisable() {
@@ -272,7 +272,6 @@ public class FactionsPlugin extends JavaPlugin {
         new ReclaimCommand();
         new ReclaimRemoveCommand();
         new StackCommand();
-        new EnchantCommand();
         new CobbleCommand();
         new PayCommand();
         new SetBalanceCommand();

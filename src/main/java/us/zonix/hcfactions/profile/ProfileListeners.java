@@ -8,6 +8,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryMoveItemEvent;
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.FactionsPlugin;
 import us.zonix.hcfactions.factions.Faction;
 import us.zonix.hcfactions.factions.claims.Claim;
@@ -129,6 +130,11 @@ public class ProfileListeners implements Listener {
                         event.setKickMessage(ProfileDeathban.KICK_MESSAGE.replace("%TIME%", deathban.getTimeLeft()));
                         Profile.getProfilesMap().remove(profile.getUuid());
                     }
+                }
+
+                if(main.getMainConfig().getBoolean("ZONIX_RANK_WHITELIST") && !us.zonix.core.profile.Profile.getByUuid(event.getUniqueId()).getRank().isAboveOrEqual(Rank.ZONIX)) {
+                    event.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_OTHER);
+                    event.setKickMessage(ChatColor.WHITE + "You are not allowed to join this server.");
                 }
             }
         }

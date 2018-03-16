@@ -1,19 +1,17 @@
 package us.zonix.hcfactions.crate.command.subcommand;
 
-import us.zonix.hcfactions.util.PluginCommand;
-import us.zonix.hcfactions.crate.Crate;
-import us.zonix.hcfactions.util.command.Command;
-import us.zonix.hcfactions.util.command.CommandArgs;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import us.zonix.core.rank.Rank;
+import us.zonix.hcfactions.crate.Crate;
 import us.zonix.hcfactions.util.PluginCommand;
 import us.zonix.hcfactions.util.command.Command;
 import us.zonix.hcfactions.util.command.CommandArgs;
 
 public class CrateKeyCommand extends PluginCommand {
-    @Command(name = "ccrate.key", aliases = {"key"}, permission = "crate.admin", inGameOnly = false)
+    @Command(name = "ccrate.key", aliases = {"key"}, permission = Rank.DEVELOPER, inGameOnly = false)
     public void onCommand(CommandArgs command) {
         CommandSender sender = command.getSender();
         String[] args = command.getArgs();

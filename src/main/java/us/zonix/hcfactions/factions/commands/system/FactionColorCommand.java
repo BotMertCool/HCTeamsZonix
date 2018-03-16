@@ -1,5 +1,6 @@
 package us.zonix.hcfactions.factions.commands.system;
 
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.factions.commands.FactionCommand;
 import us.zonix.hcfactions.factions.type.SystemFaction;
 import us.zonix.hcfactions.util.command.Command;
@@ -17,7 +18,7 @@ import us.zonix.hcfactions.util.command.CommandArgs;
  * explicit permission from original author: Alexander Maxwell
  */
 public class FactionColorCommand extends FactionCommand {
-    @Command(name = "f.color", aliases = {"faction.color", "factions.color", "f.setcolor", "faction.setcolor", "factions.setcolor"}, inGameOnly = false, permission = "hcf.admin")
+    @Command(name = "f.color", aliases = {"faction.color", "factions.color", "f.setcolor", "faction.setcolor", "factions.setcolor"}, inGameOnly = false, permission = Rank.DEVELOPER)
     public void onCommand(CommandArgs command) {
         CommandSender sender = command.getPlayer();
 

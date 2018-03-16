@@ -1,5 +1,6 @@
 package us.zonix.hcfactions.event.koth.procedure.command;
 
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.event.EventManager;
 import us.zonix.hcfactions.event.koth.KothEvent;
 import us.zonix.hcfactions.util.PluginCommand;
@@ -11,7 +12,7 @@ import us.zonix.hcfactions.util.command.CommandArgs;
 
 public class KothRemoveCommand extends PluginCommand {
 
-    @Command(name = "koth.remove", aliases = {"koth.delete", "removekoth", "kothremove"}, permission = "koth.remove")
+    @Command(name = "koth.remove", aliases = {"koth.delete", "removekoth", "kothremove"}, permission = Rank.DEVELOPER)
     public void onCommand(CommandArgs command) {
 
         CommandSender sender = command.getSender();

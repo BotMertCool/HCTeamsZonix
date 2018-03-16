@@ -1,5 +1,6 @@
 package us.zonix.hcfactions.inventory.command;
 
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.profile.Profile;
 import us.zonix.hcfactions.profile.fight.ProfileFight;
 import us.zonix.hcfactions.util.PluginCommand;
@@ -24,7 +25,7 @@ import static com.mongodb.client.model.Sorts.descending;
 
 public class LastInventoryCommand extends PluginCommand {
 
-    @Command(name = "lastinventory", aliases = {"lastinv", "restoreinv", "restoreinventory"}, permission = "inventory.restore")
+    @Command(name = "lastinventory", aliases = {"lastinv", "restoreinv", "restoreinventory"}, permission = Rank.ADMINISTRATOR)
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();
         String[] args = command.getArgs();

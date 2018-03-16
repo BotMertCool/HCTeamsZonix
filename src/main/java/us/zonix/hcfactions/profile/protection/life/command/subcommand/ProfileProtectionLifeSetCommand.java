@@ -1,5 +1,6 @@
 package us.zonix.hcfactions.profile.protection.life.command.subcommand;
 
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.profile.Profile;
 import us.zonix.hcfactions.profile.protection.life.ProfileProtectionLifeType;
 import us.zonix.hcfactions.util.PluginCommand;
@@ -15,7 +16,7 @@ import us.zonix.hcfactions.util.command.Command;
 import us.zonix.hcfactions.util.command.CommandArgs;
 
 public class ProfileProtectionLifeSetCommand extends PluginCommand {
-    @Command(name = "lives.set", aliases = {"lifes.set"}, permission = "lives.set", inGameOnly = false)
+    @Command(name = "lives.set", aliases = {"lifes.set"}, permission = Rank.MANAGER, inGameOnly = false)
     public void onCommand(CommandArgs command) {
         CommandSender sender = command.getSender();
         String[] args = command.getArgs();

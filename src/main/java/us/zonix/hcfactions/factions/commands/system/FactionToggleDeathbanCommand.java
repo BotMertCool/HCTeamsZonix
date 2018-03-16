@@ -1,5 +1,6 @@
 package us.zonix.hcfactions.factions.commands.system;
 
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.factions.commands.FactionCommand;
 import us.zonix.hcfactions.factions.type.SystemFaction;
 import us.zonix.hcfactions.util.command.Command;
@@ -12,7 +13,7 @@ import org.bukkit.command.CommandSender;
  * explicit permission from original author: Alexander Maxwell
  */
 public class FactionToggleDeathbanCommand extends FactionCommand {
-    @Command(name = "f.toggledeathban", aliases = {"faction.toggledeathban", "factions.toggledeathban", "f.deathban", "faction.deathban", "factions.deathban"}, inGameOnly = false, permission = "hcf.admin")
+    @Command(name = "f.toggledeathban", aliases = {"faction.toggledeathban", "factions.toggledeathban", "f.deathban", "faction.deathban", "factions.deathban"}, inGameOnly = false, permission = Rank.DEVELOPER)
     public void onCommand(CommandArgs command) {
         CommandSender sender = command.getPlayer();
 

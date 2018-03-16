@@ -1,5 +1,6 @@
 package us.zonix.hcfactions.economysign;
 
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.FactionsPlugin;
 import us.zonix.hcfactions.profile.Profile;
 import us.zonix.hcfactions.util.ItemNames;
@@ -109,7 +110,7 @@ public class EconomySignListeners implements Listener {
     public void onSignChangeEvent(SignChangeEvent event) {
         Player player = event.getPlayer();
 
-        if (player.hasPermission("economy.sign.create")) {
+        if (us.zonix.core.profile.Profile.getByUuid(player.getUniqueId()).getRank().isAboveOrEqual(Rank.DEVELOPER)) {
             String[] lines = event.getLines();
             String typeLine = lines[0];
 

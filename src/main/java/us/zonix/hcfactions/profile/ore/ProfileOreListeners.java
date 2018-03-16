@@ -39,7 +39,7 @@ public class ProfileOreListeners implements Listener {
                 blocks.clear(); //clear blocks every 10 minutes
                 placed.clear();
             }
-        }.runTaskTimer(main, 20 * 600, 20 * 600);
+        }.runTaskTimerAsynchronously(main, 20 * 600, 20 * 600);
     }
 
     @EventHandler(ignoreCancelled = true)

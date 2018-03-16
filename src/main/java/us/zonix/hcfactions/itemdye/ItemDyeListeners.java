@@ -1,9 +1,9 @@
 package us.zonix.hcfactions.itemdye;
 
+import org.bukkit.ChatColor;
 import us.zonix.core.profile.Profile;
 import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.util.ItemBuilder;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
@@ -14,7 +14,6 @@ import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
-import us.zonix.hcfactions.util.ItemBuilder;
 
 public class ItemDyeListeners implements Listener {
 

@@ -22,7 +22,7 @@ public class ProfileProtectionEnableCommand extends PluginCommand {
         CommandSender sender = command.getSender();
         String[] args = command.getArgs();
 
-        if (args.length != 0 && !sender.hasPermission("pvp.enable.others")) {
+        if (args.length != 0 && !sender.isOp()) {
             sender.sendMessage(langFile.getString("PVP_PROTECTION.COMMAND.ENABLE.USAGE"));
             return;
         }

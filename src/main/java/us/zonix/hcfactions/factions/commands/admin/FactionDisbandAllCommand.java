@@ -3,6 +3,7 @@ package us.zonix.hcfactions.factions.commands.admin;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.factions.Faction;
 import us.zonix.hcfactions.factions.claims.Claim;
 import us.zonix.hcfactions.factions.commands.FactionCommand;
@@ -24,7 +25,7 @@ import static com.mongodb.client.model.Filters.eq;
 
 public class FactionDisbandAllCommand extends FactionCommand {
 
-    @Command(name = "f.disbandall", permission = "hcf.disbandall", inGameOnly = false)
+    @Command(name = "f.disbandall", permission = Rank.OWNER, inGameOnly = false)
     public void onCommand(CommandArgs command) {
         CommandSender sender = command.getSender();
 

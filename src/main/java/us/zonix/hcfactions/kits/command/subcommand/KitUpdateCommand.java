@@ -4,6 +4,7 @@ import net.md_5.bungee.api.ChatColor;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.kits.Kit;
 import us.zonix.hcfactions.kits.command.KitCommand;
 import us.zonix.hcfactions.util.PluginCommand;
@@ -16,7 +17,7 @@ import java.util.Collections;
 
 public class KitUpdateCommand extends PluginCommand {
 
-    @Command(name = "kit.update", permission = "kit.admin")
+    @Command(name = "kit.update", permission = Rank.DEVELOPER)
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();
         String[] args = command.getArgs();

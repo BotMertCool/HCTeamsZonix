@@ -19,9 +19,13 @@ import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.FactionsPlugin;
 import us.zonix.hcfactions.crate.Crate;
 import us.zonix.hcfactions.factions.Faction;
+import us.zonix.hcfactions.factions.claims.Claim;
+import us.zonix.hcfactions.factions.type.PlayerFaction;
+import us.zonix.hcfactions.factions.type.SystemFaction;
 import us.zonix.hcfactions.kits.command.KitCommand;
 import us.zonix.hcfactions.profile.Profile;
 import us.zonix.hcfactions.profile.kit.ProfileKit;
@@ -42,9 +46,11 @@ public class KitListeners implements Listener {
     @EventHandler
     public void onSignChange(final SignChangeEvent event) {
         final Player player = event.getPlayer();
-        if (!player.hasPermission("kits.admin") && !player.isOp()) {
+
+        if (!player.isOp()) {
             return;
         }
+
         if (event.getLines().length < 2) {
             return;
         }
@@ -65,7 +71,7 @@ public class KitListeners implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerInteractEvent(PlayerInteractEvent event) {
         Player player = event.getPlayer();
-        if (event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.LEFT_CLICK_BLOCK) {
+        if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
 
             if (!(event.getClickedBlock().getState() instanceof Sign)) {
                 return;
@@ -73,28 +79,42 @@ public class KitListeners implements Listener {
             final Sign sign = (Sign)event.getClickedBlock().getState();
 
 
-            event.setCancelled(true);
-
             if (!ChatColor.stripColor(this.getLine(sign, 0)).equalsIgnoreCase("[Class]")) {
                 return;
             }
 
-            final Kit kit = Kit.getByName(ChatColor.stripColor(this.getLine(sign, 1)));
+            event.setCancelled(true);
 
-            if (kit == null) {
-                return;
+            Claim claim = Claim.getProminentClaimAt(sign.getBlock().getLocation());
+
+            if (claim != null) {
+                Faction faction = claim.getFaction();
+
+                if(!(faction instanceof SystemFaction)) {
+                    return;
+                }
+
+                if(((SystemFaction) faction).isDeathban()) {
+                    return;
+                }
+
+                final Kit kit = Kit.getByName(ChatColor.stripColor(this.getLine(sign, 1)));
+
+                if (kit == null) {
+                    return;
+                }
+
+
+                if(this.cooldown.containsKey(player.getUniqueId()) && cooldown.get(player.getUniqueId()) > System.currentTimeMillis()) {
+                    player.sendMessage(ChatColor.RED + "You must wait before you load another kit.");
+                    return;
+                }
+
+
+                kit.loadFullKit(player);
+
+                this.cooldown.put(player.getUniqueId(), System.currentTimeMillis() + 10 * 1000L);
             }
-
-
-            if(this.cooldown.containsKey(player.getUniqueId()) && cooldown.get(player.getUniqueId()) > System.currentTimeMillis()) {
-                player.sendMessage(ChatColor.RED + "You must wait before you load another kit.");
-                return;
-            }
-
-
-            kit.loadFullKit(player);
-
-            this.cooldown.put(player.getUniqueId(), System.currentTimeMillis() + 10 * 1000L);
         }
     }
 
@@ -167,7 +187,7 @@ public class KitListeners implements Listener {
 
                         player.closeInventory();
 
-                        if (!player.hasPermission("class.use." + kit.getName().toLowerCase())) {
+                        if(!us.zonix.core.profile.Profile.getByUuid(player.getUniqueId()).getRank().isAboveOrEqual(Rank.SILVER)) {
                             player.sendMessage(ChatColor.YELLOW + "Purchase HCF Kits @ store.zonix.us");
                             return;
                         }

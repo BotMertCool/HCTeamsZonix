@@ -9,7 +9,9 @@ import com.mongodb.client.MongoDatabase;
 import lombok.Getter;
 import us.zonix.hcfactions.FactionsPlugin;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class FactionsDatabase {
 
@@ -25,7 +27,10 @@ public class FactionsDatabase {
 
     public FactionsDatabase(FactionsPlugin main) {
         if (main.getMainConfig().getBoolean("DATABASE.MONGO.AUTHENTICATION.ENABLED")) {
-            client = new MongoClient(new ServerAddress(main.getMainConfig().getString("DATABASE.MONGO.HOST"), main.getMainConfig().getInt("DATABASE.MONGO.PORT")), Arrays.asList(MongoCredential.createCredential(main.getMainConfig().getString("DATABASE.MONGO.AUTHENTICATION.USER"), main.getMainConfig().getString("DATABASE.MONGO.AUTHENTICATION.DATABASE"), main.getMainConfig().getString("DATABASE.MONGO.AUTHENTICATION.PASSWORD").toCharArray())));
+
+            List<MongoCredential> credentials = new ArrayList<>();
+            credentials.add(MongoCredential.createCredential(main.getMainConfig().getString("DATABASE.MONGO.AUTHENTICATION.USER"), main.getMainConfig().getString("DATABASE.MONGO.AUTHENTICATION.DATABASE"), main.getMainConfig().getString("DATABASE.MONGO.AUTHENTICATION.PASSWORD").toCharArray()));
+            client = new MongoClient(new ServerAddress(main.getMainConfig().getString("DATABASE.MONGO.HOST"), main.getMainConfig().getInt("DATABASE.MONGO.PORT")), credentials);
         }
         else {
             client = new MongoClient(new ServerAddress(main.getMainConfig().getString("DATABASE.MONGO.HOST"), main.getMainConfig().getInt("DATABASE.MONGO.PORT")));

@@ -10,6 +10,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.FactionsPlugin;
 import us.zonix.hcfactions.kits.Kit;
 import us.zonix.hcfactions.kits.command.subcommand.*;
@@ -67,7 +68,7 @@ public class KitCommand extends PluginCommand {
                 return;
             }
 
-            if (!player.hasPermission("class.use." + kit.getName().toLowerCase())) {
+            if(!us.zonix.core.profile.Profile.getByUuid(player.getUniqueId()).getRank().isAboveOrEqual(Rank.SILVER)) {
                 player.sendMessage(ChatColor.YELLOW + "Purchase HCF Kits @ store.zonix.us");
                 return;
             }
