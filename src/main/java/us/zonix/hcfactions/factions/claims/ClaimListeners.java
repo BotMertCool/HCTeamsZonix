@@ -35,6 +35,7 @@ import us.zonix.hcfactions.factions.type.PlayerFaction;
 import us.zonix.hcfactions.factions.type.SystemFaction;
 import us.zonix.hcfactions.files.ConfigFile;
 import us.zonix.hcfactions.profile.Profile;
+import us.zonix.hcfactions.util.LocationSerialization;
 
 public class ClaimListeners implements Listener {
 
@@ -299,6 +300,13 @@ public class ClaimListeners implements Listener {
                     return;
                 }
 
+                if(faction instanceof SystemFaction && faction.getName().equalsIgnoreCase("Warzone")) {
+
+                    if(this.getSpawnLocation() != null && this.getSpawnLocation().distance(event.getEntity().getLocation()) >= 302) {
+                        return;
+                    }
+                }
+
                 if (profile.getFaction() == null || !faction.equals(profile.getFaction())) {
                     if (faction instanceof SystemFaction) {
                         SystemFaction systemFaction = (SystemFaction) faction;
@@ -334,6 +342,13 @@ public class ClaimListeners implements Listener {
 
             if (faction instanceof PlayerFaction && ((PlayerFaction) faction).isRaidable()) {
                 return;
+            }
+
+            if(faction instanceof SystemFaction && faction.getName().equalsIgnoreCase("Warzone")) {
+
+                if(this.getSpawnLocation() != null && this.getSpawnLocation().distance(event.getEntity().getLocation()) >= 302) {
+                    return;
+                }
             }
 
             if (profile.getFaction() == null || !faction.equals(profile.getFaction())) {
@@ -396,6 +411,13 @@ public class ClaimListeners implements Listener {
 
                 if (faction instanceof PlayerFaction && ((PlayerFaction) faction).isRaidable()) {
                     return;
+                }
+
+                if(faction instanceof SystemFaction && faction.getName().equalsIgnoreCase("Warzone")) {
+
+                    if(this.getSpawnLocation() != null && this.getSpawnLocation().distance(event.getEntity().getLocation()) >= 302) {
+                        return;
+                    }
                 }
 
                 if (profile.getFaction() == null || !faction.equals(profile.getFaction())) {
@@ -509,6 +531,13 @@ public class ClaimListeners implements Listener {
                 return;
             }
 
+            if(faction instanceof SystemFaction && faction.getName().equalsIgnoreCase("Warzone")) {
+
+                if(this.getSpawnLocation() != null && this.getSpawnLocation().distance(event.getBlock().getLocation()) >= 302) {
+                    return;
+                }
+            }
+
             if (!faction.equals(profile.getFaction())) {
                 if (faction instanceof SystemFaction) {
                     SystemFaction systemFaction = (SystemFaction) faction;
@@ -544,6 +573,13 @@ public class ClaimListeners implements Listener {
 
             if (faction instanceof PlayerFaction && ((PlayerFaction) faction).isRaidable()) {
                 return;
+            }
+
+            if(faction instanceof SystemFaction && faction.getName().equalsIgnoreCase("Warzone")) {
+
+                if(this.getSpawnLocation() != null && this.getSpawnLocation().distance(event.getBlock().getLocation()) >= 302) {
+                    return;
+                }
             }
 
             if (!faction.equals(profile.getFaction())) {
@@ -583,6 +619,13 @@ public class ClaimListeners implements Listener {
                 return;
             }
 
+            if(faction instanceof SystemFaction && faction.getName().equalsIgnoreCase("Warzone")) {
+
+                if(this.getSpawnLocation() != null && this.getSpawnLocation().distance(event.getBlockClicked().getLocation()) >= 302) {
+                    return;
+                }
+            }
+
             if (!faction.equals(profile.getFaction())) {
                 if (faction instanceof SystemFaction) {
                     SystemFaction systemFaction = (SystemFaction) faction;
@@ -618,6 +661,13 @@ public class ClaimListeners implements Listener {
 
             if (faction instanceof PlayerFaction && ((PlayerFaction) faction).isRaidable()) {
                 return;
+            }
+
+            if(faction instanceof SystemFaction && faction.getName().equalsIgnoreCase("Warzone")) {
+
+                if(this.getSpawnLocation() != null && this.getSpawnLocation().distance(event.getBlockClicked().getLocation()) >= 302) {
+                    return;
+                }
             }
 
             if (!faction.equals(profile.getFaction())) {
@@ -663,6 +713,12 @@ public class ClaimListeners implements Listener {
                     return;
                 }
 
+                if(faction instanceof SystemFaction && faction.getName().equalsIgnoreCase("Warzone")) {
+
+                    if(this.getSpawnLocation() != null && this.getSpawnLocation().distance(entity.getLocation()) >= 302) {
+                        return;
+                    }
+                }
 
                 if (profile.getFaction() == null || !faction.equals(profile.getFaction())) {
                     if (faction instanceof SystemFaction) {
@@ -703,6 +759,13 @@ public class ClaimListeners implements Listener {
 
                     if (faction instanceof PlayerFaction && ((PlayerFaction) faction).isRaidable()) {
                         return;
+                    }
+
+                    if(faction instanceof SystemFaction && faction.getName().equalsIgnoreCase("Warzone")) {
+
+                        if(this.getSpawnLocation() != null && this.getSpawnLocation().distance(block.getLocation()) >= 302) {
+                            return;
+                        }
                     }
 
                     if (!faction.equals(profile.getFaction())) {
@@ -748,6 +811,13 @@ public class ClaimListeners implements Listener {
 
                 if (faction instanceof PlayerFaction && ((PlayerFaction) faction).isRaidable()) {
                     return;
+                }
+
+                if(faction instanceof SystemFaction && faction.getName().equalsIgnoreCase("Warzone")) {
+
+                    if(this.getSpawnLocation() != null && this.getSpawnLocation().distance(block.getLocation()) >= 302) {
+                        return;
+                    }
                 }
 
                 if (!faction.equals(profile.getFaction())) {
@@ -800,5 +870,13 @@ public class ClaimListeners implements Listener {
                 }
             }
         }
+    }
+
+    private Location getSpawnLocation() {
+        SystemFaction faction = SystemFaction.getByName("Spawn");
+        if (faction != null && faction.getHome() != null) {
+            return LocationSerialization.deserializeLocation(faction.getHome());
+        }
+        return null;
     }
 }

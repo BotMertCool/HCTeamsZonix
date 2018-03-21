@@ -286,6 +286,7 @@ public class FactionsPlugin extends JavaPlugin {
         new PlayTimeCommand();
         new TellLocationCommand();
         new FocusCommand();
+        new SetGKitCommand();
         new MedicReviveCommand();
 
         new FactionHelpCommand();

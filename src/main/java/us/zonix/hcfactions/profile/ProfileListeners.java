@@ -8,6 +8,8 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryMoveItemEvent;
+import org.bukkit.permissions.PermissionAttachment;
+import us.zonix.core.CorePlugin;
 import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.FactionsPlugin;
 import us.zonix.hcfactions.factions.Faction;
@@ -59,6 +61,7 @@ public class ProfileListeners implements Listener {
 
     private static FactionsPlugin main = FactionsPlugin.getInstance();
 
+    private static HashMap<UUID, PermissionAttachment> localPermissions = new HashMap<UUID, PermissionAttachment>();
     private HashMap<UUID, HashMap<ProfileProtectionLifeType, Long>> livesCooldown;
 
     public ProfileListeners(FactionsPlugin main) {
@@ -180,6 +183,38 @@ public class ProfileListeners implements Listener {
             Profile.sendGlobalTabUpdate();
             profile.updateTab();
         }, 20L);
+
+        PermissionAttachment attachment = player.addAttachment(CorePlugin.getInstance());
+        localPermissions.put(player.getUniqueId(), attachment);
+        PermissionAttachment permission = localPermissions.get(player.getUniqueId());
+
+        if(us.zonix.core.profile.Profile.getByUuid(player.getUniqueId()).getRank().isAboveOrEqual(Rank.TRIAL_MOD)) {
+            permission.setPermission("worldedit.navigation.jumpto.command", true);
+        }
+        if(us.zonix.core.profile.Profile.getByUuid(player.getUniqueId()).getRank().isAboveOrEqual(Rank.MODERATOR)) {
+            permission.setPermission("coreprotect.inspect", true);
+            permission.setPermission("coreprotect.lookup", true);
+        }
+
+        if(us.zonix.core.profile.Profile.getByUuid(player.getUniqueId()).getRank().isAboveOrEqual(Rank.ADMINISTRATOR)) {
+            permission.setPermission("coreprotect.rollback", true);
+            permission.setPermission("coreprotect.restore", true);
+        }
+
+        if(us.zonix.core.profile.Profile.getByUuid(player.getUniqueId()).getRank().isAboveOrEqual(Rank.MANAGER)) {
+            permission.setPermission("coreprotect.*", true);
+        }
+
+        permission.setPermission("playervaults.amount.3", true);
+        permission.setPermission("crazyenchantments.access", true);
+
+        if(profile.getBoughtKits().size() <= 0) {
+            return;
+        }
+
+        for(String kitName : profile.getBoughtKits()) {
+            permission.setPermission("crazyenchantments.gkitz." + kitName, true);
+        }
     }
 
     @EventHandler
@@ -361,6 +396,22 @@ public class ProfileListeners implements Listener {
                 profile.save();
             }
         }.runTaskAsynchronously(FactionsPlugin.getInstance());
+
+        localPermissions.get(player.getUniqueId()).unsetPermission("playervaults.amount.3");
+        localPermissions.get(player.getUniqueId()).unsetPermission("crazyenchantments.access");
+        localPermissions.get(player.getUniqueId()).unsetPermission("coreprotect.inspect");
+        localPermissions.get(player.getUniqueId()).unsetPermission("coreprotect.lookup");
+        localPermissions.get(player.getUniqueId()).unsetPermission("coreprotect.restore");
+        localPermissions.get(player.getUniqueId()).unsetPermission("coreprotect.rollback");
+        localPermissions.get(player.getUniqueId()).unsetPermission("coreprotect.*");
+
+        if(profile.getBoughtKits().size() > 0) {
+            for(String kitName : profile.getBoughtKits()) {
+                localPermissions.get(player.getUniqueId()).unsetPermission("crazyenchantments.gkitz." + kitName);
+            }
+        }
+
+        localPermissions.remove(player.getUniqueId());
     }
 
     @EventHandler
@@ -486,4 +537,7 @@ public class ProfileListeners implements Listener {
         }
     }
 
+    public static HashMap<UUID, PermissionAttachment> getLocalPermissions() {
+        return localPermissions;
+    }
 }

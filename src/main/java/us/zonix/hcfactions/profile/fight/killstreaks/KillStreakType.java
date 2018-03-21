@@ -12,7 +12,7 @@ public enum KillStreakType {
     TEN_KILLS(10, "Invis Splash", new ItemStack[] {new ItemBuilder(Material.POTION).durability(16318).build()}),
     TWELVE_KILLS(12, "Cobwebs", new ItemStack[] {new ItemBuilder(Material.WEB).amount(20).build()}),
     FIFTEEN_KILLS(15, "God Apple", new ItemStack[] {new ItemBuilder(Material.GOLDEN_APPLE).durability(1).build()}),
-    TWENTY_KILLS(15, "Strength II", new ItemStack[] {new ItemBuilder(Material.POTION).durability(16377).build()});
+    TWENTY_KILLS(20, "Strength II", new ItemStack[] {new ItemBuilder(Material.POTION).durability(16377).build()});
 
     private int count;
     private String message;

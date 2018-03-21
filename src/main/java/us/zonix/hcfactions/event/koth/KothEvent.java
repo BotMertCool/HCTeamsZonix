@@ -69,7 +69,7 @@ public class KothEvent implements Event {
         this.capTime = capTime;
         this.active = true;
 
-        Bukkit.broadcastMessage(main.getLanguageConfig().getString("KOTH.START").replace("%KOTH%", name).replace("%TIME%", getTimeLeft()));
+        Bukkit.broadcastMessage(main.getLanguageConfig().getString("KOTH.START").replace("%KOTH%", name).replace("%TIME%", getTimeLeft()) + ChatColor.GRAY + " (" + (FactionsPlugin.getInstance().isKitmapMode() ? getKitMapKothLocation(this) : getKothLocation(this)) + ")");
     }
 
     public void stop(boolean force) {
@@ -198,6 +198,14 @@ public class KothEvent implements Event {
         document.put("zone", zoneArray.toString());
 
         collection.replaceOne(eq("uuid", uuid.toString()), document, new UpdateOptions().upsert(true));
+    }
+
+    private String getKothLocation(KothEvent event) {
+        return (event.getZone().getCenter().getX() < 0 ? "-500" : "500") + ", " + event.getZone().getCenter().getBlockY() + ", " + (event.getZone().getCenter().getZ() < 0 ? "-500" : "500");
+    }
+
+    private String getKitMapKothLocation(KothEvent event) {
+        return (event.getZone().getCenter().getX() < 0 ? "-250" : "250") + ", " + event.getZone().getCenter().getBlockY() + ", " + (event.getZone().getCenter().getZ() < 0 ? "-250" : "250");
     }
 
 }

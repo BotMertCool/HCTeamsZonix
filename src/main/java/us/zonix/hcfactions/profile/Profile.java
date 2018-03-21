@@ -76,6 +76,7 @@ public class Profile {
     private List<PotionEffect> cachedEffects;
     private Map<Location, ClaimWall> walls;
     private List<ProfileFight> fights;
+    private List<String> boughtKits;
     private LinkedHashMap<UUID, Boolean> previousFights;
     @Setter private ProfileKitEnergy energy;
     @Setter private String name;
@@ -120,6 +121,7 @@ public class Profile {
         this.cachedEffects = new ArrayList<>();
         this.options = new ProfileOptions();
         this.fights = new ArrayList<>();
+        this.boughtKits = new ArrayList<>();
         this.previousFights = new LinkedHashMap<>();
         this.walls = new HashMap<>();
         this.balance = 0;
@@ -439,6 +441,18 @@ public class Profile {
             document.put("fights", fightsArray.toString());
         }
 
+        JsonArray kitsArray = new JsonArray();
+
+        for (String kitName : this.boughtKits) {
+            JsonObject object = new JsonObject();
+            object.addProperty("kit", kitName);
+            kitsArray.add(object);
+        }
+
+        if (kitsArray.size() > 0) {
+            document.put("boughtKits", kitsArray.toString());
+        }
+
         JsonArray achievementArray = new JsonArray();
 
         for (ProfileAchievement achievement : this.achievements) {
@@ -554,6 +568,19 @@ public class Profile {
                     for (JsonElement jsonElement : fightsArray) {
                         JsonObject jsonObject = jsonElement.getAsJsonObject();
                         try {previousFights.put(UUID.fromString(jsonObject.get("uuid").getAsString()), jsonObject.get("killer").getAsBoolean());} catch (Exception ex) {ex.printStackTrace();}
+                    }
+                }
+            }
+
+            if (document.containsKey("boughtKits")) {
+                if (document.get("boughtKits") instanceof String) {
+                    JsonArray kitsArray = new JsonParser().parse(document.getString("boughtKits")).getAsJsonArray();
+
+                    for (JsonElement jsonElement : kitsArray) {
+                        JsonObject jsonObject = jsonElement.getAsJsonObject();
+                        try {
+                            boughtKits.add(jsonObject.get("kit").getAsString());
+                        } catch (Exception ex) {ex.printStackTrace();}
                     }
                 }
             }

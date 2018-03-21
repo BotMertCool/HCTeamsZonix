@@ -133,6 +133,10 @@ public class EconomySignListeners implements Listener {
                     itemStackName = "Cow Egg";
                 } else if (lines[1].equalsIgnoreCase("fresh potato")) {
                     itemStackName = "Fresh Potato";
+                } else if (lines[1].equalsIgnoreCase("fresh carrot")) {
+                    itemStackName = "Fresh Carrot";
+                } else if (lines[1].equalsIgnoreCase("dye")) {
+                    itemStackName = "Dye";
                 } else {
                     itemStackName = ItemNames.lookup(new ItemStack(Material.valueOf(lines[1].replace(" ", "_").toUpperCase())));
                 }

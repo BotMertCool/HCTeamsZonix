@@ -56,8 +56,10 @@ public class EconomySign {
                 itemStack = new ItemStack(Material.NETHER_STALK);
             } else if (materialName.equalsIgnoreCase("Fresh Potato")) {
                 itemStack = new ItemStack(Material.POTATO_ITEM);
-            } else if (materialName.equalsIgnoreCase("Carrot")) {
+            } else if (materialName.equalsIgnoreCase("Fresh Carrot")) {
                 itemStack = new ItemStack(Material.CARROT_ITEM);
+            } else if (materialName.equalsIgnoreCase("Dye")) {
+                itemStack = new ItemStack(Material.INK_SACK);
             } else if (materialName.equalsIgnoreCase("Fermented Eye")) {
                 itemStack = new ItemStack(Material.FERMENTED_SPIDER_EYE);
             } else {

@@ -21,6 +21,7 @@ public class FactionSetDtrCommand extends FactionCommand {
         CommandSender sender = command.getSender();
 
         if (command.getArgs().length == 2) {
+            
             String name = command.getArgs()[0];
 
             if(name.equalsIgnoreCase("*") && sender instanceof ConsoleCommandSender) {

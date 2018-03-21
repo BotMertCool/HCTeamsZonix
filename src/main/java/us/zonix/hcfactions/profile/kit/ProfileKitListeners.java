@@ -37,7 +37,14 @@ public class ProfileKitListeners implements Listener {
                             for (PotionEffect effect : new HashSet<>(player.getActivePotionEffects())) {
                                 if (effect.getType().equals(cachedEffect.getType())) {
                                     if (effect.getDuration() <= 20) {
-                                        player.addPotionEffect(cachedEffect, true);
+
+                                        Bukkit.getServer().getScheduler().runTask(FactionsPlugin.getInstance(), new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                player.addPotionEffect(cachedEffect, true);
+                                            }
+                                        });
+
                                         iterator.remove();
                                     }
                                 }

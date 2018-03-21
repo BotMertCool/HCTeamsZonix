@@ -47,7 +47,7 @@ public class KitCommand extends PluginCommand {
         new KitUpdateCommand();
     }
 
-    @Command(name = "kit", inGameOnly = true)
+    @Command(name = "kit", aliases = "kits", inGameOnly = true)
     public void onCommand(CommandArgs command) {
         Player player = command.getPlayer();
         String[] args = command.getArgs();
@@ -58,39 +58,7 @@ public class KitCommand extends PluginCommand {
         }
 
         if(args.length == 0) {
-            openKitsInventory(player);
-        } else if(args.length == 1) {
-
-            Kit kit = Kit.getByName(StringUtils.join(args));
-
-            if(kit == null) {
-                player.sendMessage(net.md_5.bungee.api.ChatColor.RED + "A kit named '" + args[0] + "' does not exist.");
-                return;
-            }
-
-            if(!us.zonix.core.profile.Profile.getByUuid(player.getUniqueId()).getRank().isAboveOrEqual(Rank.SILVER)) {
-                player.sendMessage(ChatColor.YELLOW + "Purchase HCF Kits @ store.zonix.us");
-                return;
-            }
-
-            Profile profile = Profile.getByUuid(player.getUniqueId());
-
-            if (profile == null) {
-                return;
-            }
-
-            if (KitCommand.isCooldownActive(profile, kit) && !player.isOp()) {
-                player.sendMessage(FactionsPlugin.getInstance().getLanguageConfig().getString("KIT_COMMAND.DELAY").replace("%TIME%", KitCommand.getTimeLeft(profile, kit)));
-                return;
-            }
-
-
-            kit.loadKit(player);
-            profile.getKitDelay().put(kit, System.currentTimeMillis() + 172800 * 1000L);
-
-            player.sendMessage(FactionsPlugin.getInstance().getLanguageConfig().getString("KIT_COMMAND.SUCCESS").replace("%KIT%", kit.getName()));
-        } else {
-            player.sendMessage(ChatColor.RED + "Usage: /kit <name>");
+            player.performCommand("gkits");
         }
     }
 
