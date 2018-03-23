@@ -1,15 +1,10 @@
 package us.zonix.hcfactions.factions.claims;
 
-import org.bukkit.World;
-import org.bukkit.block.Sign;
-import us.zonix.core.rank.Rank;
-import us.zonix.hcfactions.FactionsPlugin;
-import us.zonix.hcfactions.factions.Faction;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.ContainerBlock;
+import org.bukkit.block.Sign;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -26,11 +21,9 @@ import org.bukkit.event.player.*;
 import org.bukkit.material.Openable;
 import org.bukkit.material.Redstone;
 import org.bukkit.scheduler.BukkitRunnable;
-import us.zonix.hcfactions.factions.type.PlayerFaction;
-import us.zonix.hcfactions.factions.type.SystemFaction;
-import us.zonix.hcfactions.files.ConfigFile;
-import us.zonix.hcfactions.profile.Profile;
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.FactionsPlugin;
+import us.zonix.hcfactions.factions.Faction;
 import us.zonix.hcfactions.factions.type.PlayerFaction;
 import us.zonix.hcfactions.factions.type.SystemFaction;
 import us.zonix.hcfactions.files.ConfigFile;
@@ -861,11 +854,16 @@ public class ClaimListeners implements Listener {
 
     @EventHandler
     public void onCreatureSpawn(CreatureSpawnEvent event) {
-        if (event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL && event.getEntity() instanceof Monster) {
+        if (event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
             Claim claim = Claim.getProminentClaimAt(event.getLocation());
 
             if (claim != null) {
                 if (claim.getFaction() instanceof SystemFaction) {
+
+                    if(!((SystemFaction) claim.getFaction()).isDeathban() && event.getEntityType() == EntityType.COW) {
+                        return;
+                    }
+
                     event.setCancelled(true);
                 }
             }

@@ -14,8 +14,7 @@ public enum ProfileOptionsItem {
 
     FOUND_DIAMOND_MESSAGES(new ItemBuilder(Material.DIAMOND).name(ChatColor.BLUE + "Found Diamonds").build(), "Do you want to see found-diamond messages?"),
     DEATH_MESSAGES(new ItemBuilder(Material.SKULL_ITEM).name(ChatColor.BLUE + "Death Messages").build(), "Do you want to see death messages?"),
-    PUBLIC_MESSAGES(new ItemBuilder(Material.SIGN).name(ChatColor.BLUE + "Public Messages").build(), "Do you want to receive public messages?"),
-    TAB_LIST_INFO(new ItemBuilder(Material.ENCHANTED_BOOK).name(ChatColor.BLUE + "Tab List Info").build(), "Do you want to modify your tab?");
+    PUBLIC_MESSAGES(new ItemBuilder(Material.SIGN).name(ChatColor.BLUE + "Public Messages").build(), "Do you want to receive public messages?");
 
     private ItemStack item;
     private List<String> description;
@@ -49,16 +48,6 @@ public enum ProfileOptionsItem {
             return new ItemBuilder(item).lore(lore).build();
         }
 
-        else if(this == TAB_LIST_INFO) {
-            List<String> lore = new ArrayList<>(description);
-
-            lore.add("  " + (state == ProfileOptionsItemState.TAB_DETAILED ? ChatColor.BLUE + StringEscapeUtils.unescapeHtml4("&#9658;") + " " : "  ") + ChatColor.GRAY + getOptionDescription(ProfileOptionsItemState.TAB_DETAILED));
-            lore.add("  " + (state == ProfileOptionsItemState.TAB_DETAILED_VANILLA ? ChatColor.BLUE + StringEscapeUtils.unescapeHtml4("&#9658;") + " "  : "  ") + ChatColor.GRAY + getOptionDescription(ProfileOptionsItemState.TAB_DETAILED_VANILLA));
-            lore.add("  " + (state == ProfileOptionsItemState.TAB_VANILLA ? ChatColor.BLUE + StringEscapeUtils.unescapeHtml4("&#9658;") + " "  : "  ") + ChatColor.GRAY + getOptionDescription(ProfileOptionsItemState.TAB_VANILLA));
-
-            return new ItemBuilder(item).lore(lore).build();
-        }
-
         return getItem(ProfileOptionsItemState.DISABLED);
     }
 
@@ -69,16 +58,6 @@ public enum ProfileOptionsItem {
                 return "Show messages";
             } else if (state == ProfileOptionsItemState.DISABLED) {
                 return "Hide messages";
-            }
-        }
-
-        else if(this == TAB_LIST_INFO) {
-            if (state == ProfileOptionsItemState.TAB_DETAILED) {
-                return "Detailed";
-            } else if (state == ProfileOptionsItemState.TAB_DETAILED_VANILLA) {
-                return "Detailed with Team List";
-            } else if (state == ProfileOptionsItemState.TAB_VANILLA) {
-                return "Vanilla";
             }
         }
 

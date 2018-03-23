@@ -98,14 +98,12 @@ import us.zonix.hcfactions.profile.protection.command.ProfileProtectionCommand;
 import us.zonix.hcfactions.statracker.StatTrackerListeners;
 import us.zonix.hcfactions.subclaim.SubclaimListeners;
 import us.zonix.hcfactions.util.FactionsBoardAdapter;
-import us.zonix.hcfactions.util.TabListRunnable;
 import us.zonix.hcfactions.util.command.CommandFramework;
 import us.zonix.hcfactions.util.database.FactionsDatabase;
 import us.zonix.hcfactions.util.player.PlayerUtility;
 import us.zonix.hcfactions.util.player.SimpleOfflinePlayer;
 
 import java.io.IOException;
-import java.util.UUID;
 
 @Getter
 public class FactionsPlugin extends JavaPlugin {

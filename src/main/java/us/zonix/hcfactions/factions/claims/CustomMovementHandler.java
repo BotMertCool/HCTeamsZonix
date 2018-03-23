@@ -15,6 +15,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
+import us.zonix.core.rank.Rank;
 import us.zonix.hcfactions.FactionsPlugin;
 import us.zonix.hcfactions.claimwall.ClaimWallType;
 import us.zonix.hcfactions.factions.events.player.PlayerCancelFactionTeleportEvent;
@@ -117,7 +118,7 @@ public class CustomMovementHandler implements MovementHandler {
 			if(vehicle != null) {
 				vehicle.eject();
 				vehicle.teleport(from);
-				vehicle.setPassenger((Entity) p);
+				vehicle.setPassenger(p);
 
 			}
 		}
@@ -193,6 +194,7 @@ public class CustomMovementHandler implements MovementHandler {
 				return langConfig.getString("FACTION_CLAIM.LEAVE.SYSTEM_FACTION_DEATHBAN").replace("%FACTION%", systemFaction.getName()).replace("%COLOR%", systemFaction.getColor() + "");
 			}
 			else {
+
 				return langConfig.getString("FACTION_CLAIM.LEAVE.SYSTEM_FACTION_NON-DEATHBAN").replace("%FACTION%", systemFaction.getName()).replace("%COLOR%", systemFaction.getColor() + "");
 			}
 		}
@@ -222,6 +224,7 @@ public class CustomMovementHandler implements MovementHandler {
 					player.setFoodLevel(20);
 					player.setFireTicks(0);
 					player.setSaturation(4.0F);
+
 				}
 
 				return langConfig.getString("FACTION_CLAIM.ENTER.SYSTEM_FACTION_NON-DEATHBAN").replace("%FACTION%", systemFaction.getName()).replace("%COLOR%", systemFaction.getColor() + "");

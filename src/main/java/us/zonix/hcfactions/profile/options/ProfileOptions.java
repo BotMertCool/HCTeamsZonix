@@ -15,15 +15,13 @@ public class ProfileOptions {
     @Getter @Setter private boolean viewFoundDiamondMessages = true;
     @Getter @Setter private boolean viewDeathMessages = true;
     @Getter @Setter private boolean receivePublicMessages = true;
-    @Getter @Setter private ProfileOptionsItemState modifyTabList = ProfileOptionsItemState.TAB_DETAILED;
 
     public Inventory getInventory() {
         Inventory toReturn = Bukkit.createInventory(null, 9, "Options");
 
-        toReturn.setItem(1  , ProfileOptionsItem.FOUND_DIAMOND_MESSAGES.getItem(viewFoundDiamondMessages ? ProfileOptionsItemState.ENABLED : ProfileOptionsItemState.DISABLED));
-        toReturn.setItem(3, ProfileOptionsItem.DEATH_MESSAGES.getItem(viewDeathMessages ? ProfileOptionsItemState.ENABLED : ProfileOptionsItemState.DISABLED));
-        toReturn.setItem(5, ProfileOptionsItem.PUBLIC_MESSAGES.getItem(receivePublicMessages ? ProfileOptionsItemState.ENABLED : ProfileOptionsItemState.DISABLED));
-        toReturn.setItem(7, ProfileOptionsItem.TAB_LIST_INFO.getItem(modifyTabList));
+        toReturn.setItem(2  , ProfileOptionsItem.FOUND_DIAMOND_MESSAGES.getItem(viewFoundDiamondMessages ? ProfileOptionsItemState.ENABLED : ProfileOptionsItemState.DISABLED));
+        toReturn.setItem(4, ProfileOptionsItem.DEATH_MESSAGES.getItem(viewDeathMessages ? ProfileOptionsItemState.ENABLED : ProfileOptionsItemState.DISABLED));
+        toReturn.setItem(6, ProfileOptionsItem.PUBLIC_MESSAGES.getItem(receivePublicMessages ? ProfileOptionsItemState.ENABLED : ProfileOptionsItemState.DISABLED));
 
         return toReturn;
     }

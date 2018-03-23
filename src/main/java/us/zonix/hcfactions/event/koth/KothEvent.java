@@ -1,13 +1,5 @@
 package us.zonix.hcfactions.event.koth;
 
-import org.bukkit.ChatColor;
-import us.zonix.hcfactions.FactionsPlugin;
-import us.zonix.hcfactions.crate.Crate;
-import us.zonix.hcfactions.event.EventManager;
-import us.zonix.hcfactions.event.Event;
-import us.zonix.hcfactions.event.EventZone;
-import us.zonix.hcfactions.util.DateUtil;
-import us.zonix.hcfactions.util.LocationSerialization;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
@@ -16,15 +8,16 @@ import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.UpdateOptions;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.commons.lang.time.DurationFormatUtils;
 import org.bson.Document;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import us.zonix.hcfactions.FactionsPlugin;
 import us.zonix.hcfactions.crate.Crate;
 import us.zonix.hcfactions.event.Event;
 import us.zonix.hcfactions.event.EventManager;
+import us.zonix.hcfactions.event.EventZone;
 import us.zonix.hcfactions.util.DateUtil;
 import us.zonix.hcfactions.util.LocationSerialization;
 

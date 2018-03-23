@@ -44,26 +44,6 @@ public class ProfileOptionsListeners implements Listener {
                     } else if (item == ProfileOptionsItem.PUBLIC_MESSAGES) {
                         profile.getOptions().setReceivePublicMessages(!profile.getOptions().isReceivePublicMessages());
                         inventory.setItem(event.getRawSlot(), item.getItem(profile.getOptions().isReceivePublicMessages() ? ProfileOptionsItemState.ENABLED : ProfileOptionsItemState.DISABLED));
-                    } else if (item == ProfileOptionsItem.TAB_LIST_INFO) {
-
-                        if(profile.getOptions().getModifyTabList() == ProfileOptionsItemState.TAB_DETAILED) {
-                            profile.getOptions().setModifyTabList(ProfileOptionsItemState.TAB_DETAILED_VANILLA);
-                        }
-                        else if(profile.getOptions().getModifyTabList() == ProfileOptionsItemState.TAB_DETAILED_VANILLA) {
-                            profile.getOptions().setModifyTabList(ProfileOptionsItemState.TAB_VANILLA);
-                            for (int r = 0; r < 20; r++) {//slot 0-59 for 1.7 players
-                                for (int c = 0; c < 3l; c++) {
-                                    CorePlugin.getInstance().getTabListManager().getTabList().updateSlot(player, r, c, "");
-                                }
-                            }
-
-                        }
-
-                        else if(profile.getOptions().getModifyTabList() == ProfileOptionsItemState.TAB_VANILLA) {
-                            profile.getOptions().setModifyTabList(ProfileOptionsItemState.TAB_DETAILED);
-                        }
-
-                        inventory.setItem(event.getRawSlot(), item.getItem(profile.getOptions().getModifyTabList()));
                     }
 
                 }
