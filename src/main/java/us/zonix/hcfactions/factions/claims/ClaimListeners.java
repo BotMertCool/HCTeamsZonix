@@ -854,16 +854,11 @@ public class ClaimListeners implements Listener {
 
     @EventHandler
     public void onCreatureSpawn(CreatureSpawnEvent event) {
-        if (event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
+        if (event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL && event.getEntity() instanceof Monster) {
             Claim claim = Claim.getProminentClaimAt(event.getLocation());
 
             if (claim != null) {
                 if (claim.getFaction() instanceof SystemFaction) {
-
-                    if(!((SystemFaction) claim.getFaction()).isDeathban() && event.getEntityType() == EntityType.COW) {
-                        return;
-                    }
-
                     event.setCancelled(true);
                 }
             }

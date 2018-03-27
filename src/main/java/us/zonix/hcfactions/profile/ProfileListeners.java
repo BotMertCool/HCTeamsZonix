@@ -134,11 +134,6 @@ public class ProfileListeners implements Listener {
                         Profile.getProfilesMap().remove(profile.getUuid());
                     }
                 }
-
-                if(main.getMainConfig().getBoolean("ZONIX_RANK_WHITELIST") && !us.zonix.core.profile.Profile.getByUuid(event.getUniqueId()).getRank().isAboveOrEqual(Rank.ZONIX)) {
-                    event.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_OTHER);
-                    event.setKickMessage(ChatColor.WHITE + "You are not allowed to join this server.");
-                }
             }
         }
     }
