@@ -8,6 +8,7 @@ import us.zonix.hcfactions.factions.Faction;
 import us.zonix.hcfactions.factions.claims.Claim;
 import us.zonix.hcfactions.factions.type.PlayerFaction;
 import us.zonix.hcfactions.factions.type.SystemFaction;
+import us.zonix.hcfactions.mode.Mode;
 import us.zonix.hcfactions.profile.Profile;
 import us.zonix.hcfactions.profile.deathban.ProfileDeathban;
 import us.zonix.hcfactions.profile.fight.killer.type.ProfileFightEnvironmentKiller;
@@ -92,8 +93,15 @@ public class CombatLoggerListeners implements Listener {
         }
 
         Profile profile = Profile.getByPlayer(player);
+
         if (profile.getProtection() != null) {
             return;
+        }
+
+        for (Mode mode : Mode.getModes()) {
+            if (mode.isSOTWActive()) {
+                return;
+            }
         }
 
         if (profile.isSafeLogout()) {

@@ -41,11 +41,9 @@ public class DeathSignListeners implements Listener {
         Player player = event.getEntity();
 
         Player killer = player.getKiller();
-        if (killer != null) {//TODO: add permission
+        if (killer != null) {
             player.getWorld().dropItemNaturally(player.getLocation(), new DeathSign(killer.getName(), player.getName()).toItemStack());
-            if (Profile.getByUuid(killer.getUniqueId()).getRank().isAboveOrEqual(Rank.SILVER)) {
-                player.getWorld().dropItemNaturally(player.getLocation(), new ItemBuilder(Material.SKULL_ITEM).durability(3).owner(player.getName()).build());
-            }
+            player.getWorld().dropItemNaturally(player.getLocation(), new ItemBuilder(Material.SKULL_ITEM).durability(3).owner(player.getName()).build());
         }
     }
 

@@ -29,8 +29,6 @@ public class EconomySignListeners implements Listener {
 
     private static FactionsPlugin main = FactionsPlugin.getInstance();
 
-    private Map<UUID, Long> cooldown = new HashMap<>();
-
     @EventHandler
     public void onPlayerInteractEvent(PlayerInteractEvent event) {
         Player player = event.getPlayer();
@@ -40,12 +38,6 @@ public class EconomySignListeners implements Listener {
 
             if (sign != null) {
                 event.setCancelled(true);
-
-                if (hasCooldown(player)) {
-                    return;
-                }
-
-                cooldown.put(player.getUniqueId(), System.currentTimeMillis());
 
                 new BukkitRunnable() {
                     @Override
@@ -178,10 +170,6 @@ public class EconomySignListeners implements Listener {
                 pos++;
             }
         }
-    }
-
-    public boolean hasCooldown(Player player) {
-        return cooldown.containsKey(player.getUniqueId()) && ((System.currentTimeMillis() - cooldown.get(player.getUniqueId())) < 1500);
     }
 
 
