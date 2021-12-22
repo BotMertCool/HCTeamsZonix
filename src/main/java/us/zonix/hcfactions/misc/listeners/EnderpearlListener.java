@@ -1,6 +1,5 @@
 package us.zonix.hcfactions.misc.listeners;
 
-import net.minecraft.server.v1_8_R3.Entity;
 import net.minecraft.server.v1_8_R3.EntityEnderPearl;
 import net.minecraft.server.v1_8_R3.World;
 import org.bukkit.Location;
@@ -20,7 +19,6 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class EnderpearlListener implements Listener {
-
 
     private Map<EnderPearl, Location> validLocations;
     private FactionsPlugin plugin;
